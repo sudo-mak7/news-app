@@ -7,7 +7,6 @@ import {
   Label,
   Segment
 } from 'semantic-ui-react'
-import NewsText from './news-sections/NewsText'
 import CommentsSection from '../comments/CommentsSection'
 
 const NewsPage = ({ comment, comments }) => {
@@ -20,8 +19,6 @@ const NewsPage = ({ comment, comments }) => {
             <Button floated='right' color='blue'>Open a news source</Button>
           </Header>
         </Segment>
-
-        <NewsText/>
 
         <Segment attached clearing>
           <Label image floated='left'>

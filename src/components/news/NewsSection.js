@@ -6,33 +6,40 @@ import {
   Segment
 } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
-import NewsText from './news-sections/NewsText'
 
-const NewsSection = () => {
+const NewsSection = ({ title, by, score, time }) => {
+  const getDate = new Date(time * 1000).toLocaleDateString() + ' ('
+  const getHours = new Date(time * 1000).getHours() + ':'
+  const getMinutes = new Date(time * 1000).getMinutes() < 10
+    ? '0' + new Date(time * 1000).getMinutes() + ')'
+    : new Date(time * 1000).getMinutes() + ')'
+
+  const date = getDate + getHours + getMinutes
+
   return (
     <Segment.Group>
       <Link to='/news-page'>
         <Segment attached='top' color='blue'>
-          <Header as='h2' color='blue'>
-            News' header
+          <Header as='h2' color='black'>
+            { title || 'No title' }
           </Header>
         </Segment>
-
-        <NewsText/>
 
         <Segment attached='bottom' clearing>
           <Label image floated='left'>
             <Icon name='user'></Icon>
-            Author
+            { by || 'No author' }
           </Label>
           <Label>
             <Icon name='star'></Icon>
-            Rating
-            <Label.Detail>214</Label.Detail>
+              Rating
+            <Label.Detail>
+              { score || 'No rating' }
+            </Label.Detail>
           </Label>
           <Label>
             <Icon name='calendar'></Icon>
-            20.02.2022
+            { date || 'No date' }
           </Label>
         </Segment>
       </Link>
