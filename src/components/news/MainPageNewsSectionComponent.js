@@ -6,18 +6,25 @@ import {
   Segment
 } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setCurrentNewsId } from '../../redux/actions/actionCreator'
+import { dateNormalizer } from '../../utils/dateNormalizer'
 
-const NewsSection = ({ title, by, score, time }) => {
-  const getDate = new Date(time * 1000).toLocaleDateString() + ' ('
-  const getHours = new Date(time * 1000).getHours() + ':'
-  const getMinutes = new Date(time * 1000).getMinutes() < 10
-    ? '0' + new Date(time * 1000).getMinutes() + ')'
-    : new Date(time * 1000).getMinutes() + ')'
+const MainPageNewsSectionComponent = ({ title, by, score, time, id }) => {
+  const dispatch = useDispatch()
 
-  const date = getDate + getHours + getMinutes
+  const date = dateNormalizer(time)
+
+  const getNewsId = (e) => {
+    const id = e.currentTarget.id
+    dispatch(setCurrentNewsId(id))
+  }
 
   return (
-    <Segment.Group>
+    <Segment.Group
+      id={ id }
+      onClick={ (e) => getNewsId(e) }
+    >
       <Link to='/news-page'>
         <Segment attached='top' color='blue'>
           <Header as='h2' color='black'>
@@ -47,4 +54,4 @@ const NewsSection = ({ title, by, score, time }) => {
   )
 }
 
-export default NewsSection
+export default MainPageNewsSectionComponent

@@ -1,4 +1,5 @@
 export const SET_NEWS = 'SET_NEWS'
-export const GET_NEWS = 'GET_NEWS'
-export const SET_NEWS_ERROR = 'SET_NEWS_ERROR'
+export const SET_CURRENT_NEWS_ID = 'SET_CURRENT_NEWS_ID'
+export const SET_CURRENT_NEWS = 'SET_CURRENT_NEWS'
+export const SET_COMMENTS = 'SET_COMMENTS'
 export const LOADING = 'LOADING'

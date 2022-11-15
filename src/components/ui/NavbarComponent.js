@@ -1,7 +1,7 @@
 import React from 'react'
 import { Header, Menu } from 'semantic-ui-react'
 
-const Navbar = () => {
+const NavbarComponent = () => {
   return (
     <Menu fixed='top' widths={ 1 }>
       <Menu.Item as='a' header>
@@ -11,4 +11,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default NavbarComponent

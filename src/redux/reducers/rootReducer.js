@@ -1,11 +1,15 @@
 import { combineReducers } from 'redux'
 import newsReducer from './newsReducer'
-import errorsReducer from './errorsReducer'
 import loaderReducer from './loaderReducer'
+import newsIdReducer from './newsIdReducer'
+import currentNewsReducer from './currentNewsReducer'
+import commentsReducer from './commentsReducer'
 
 const rootReducer = combineReducers({
   newsReducer,
-  errorsReducer,
+  newsIdReducer,
+  currentNewsReducer,
+  commentsReducer,
   loaderReducer
 })
 

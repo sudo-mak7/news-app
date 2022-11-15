@@ -5,24 +5,24 @@ import {
   Route,
   Switch
 } from 'react-router-dom'
-import Navbar from './components/ui/Navbar'
-import Main from './pages/main/Main'
-import News from './pages/news/News'
+import NavbarComponent from './components/ui/NavbarComponent'
+import MainPage from './pages/main/MainPage'
+import NewsPage from './pages/news/NewsPage'
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Navbar/>
+      <NavbarComponent/>
 
       <Switch>
         <Route
           exact
           path='/'
-          component={ Main }
+          component={ MainPage }
         />
         <Route
           path='/news-page'
-          component={ News }
+          component={ NewsPage }
         />
         <Redirect to='/'/>
       </Switch>
