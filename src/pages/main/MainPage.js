@@ -44,9 +44,11 @@ const MainPage = () => {
     
     newsGetter()
 
-    setInterval(() => {
+    const autoUpdateNews = setInterval(() => {
       newsGetter()
     }, 60 * 1000)
+
+    return () => clearInterval(autoUpdateNews)
   }, [])
 
   const loaderRender =
