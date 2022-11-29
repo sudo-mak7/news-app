@@ -1,6 +1,6 @@
 export const getNewsIds = async () => {
   try {
-    const request = await fetch('https://hacker-news.firebaseio.com/v0/newstories.json')
+    const request = await fetch('https://hacker-news.firebaseio.com/v0/beststories.json')
     return await request.json()
   } catch (e) {
     console.error(e)

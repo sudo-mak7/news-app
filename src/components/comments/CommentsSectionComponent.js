@@ -3,14 +3,17 @@ import { Comment, Header, Loader } from 'semantic-ui-react'
 import CommentComponent from './CommentComponent'
 import { useDispatch, useSelector } from 'react-redux'
 import { getComments } from '../../api/api'
-import { loading, setComments } from '../../redux/actions/actionCreator'
+import { loading } from '../../redux/loading/loadingSlice'
+import { setComments } from '../../redux/comments/commentsSlice'
 
 const CommentsSectionComponent = ({ error, setError })  => {
-  const news = useSelector(store => store.currentNewsReducer.news)
-  const isLoading = useSelector(store => store.loaderReducer.isLoading)
+  const news = useSelector(state => state.currentNews.currentNews)
+  const isLoading = useSelector(state => state.loading.isLoading)
+  const comments = useSelector(state => state.setComments.comments)
+
   const dispatch = useDispatch()
 
-  const comments = useSelector(store => store.commentsReducer.comments)
+  const errorMessage = 'Error loading comments :('
 
   useEffect(() => {
     if (news?.hasOwnProperty('kids')) {
@@ -19,10 +22,10 @@ const CommentsSectionComponent = ({ error, setError })  => {
       getComments(
         news.kids
           ? news.kids
-          : setError('Error loading comments :(')
+          : setError(errorMessage)
       ).then(data => {
         !data
-          ? setError('Error loading comments :(')
+          ? setError(errorMessage)
           : dispatch(setComments(data))
         dispatch(loading(false))
       })
@@ -41,7 +44,7 @@ const CommentsSectionComponent = ({ error, setError })  => {
     <Comment.Group>
       { isLoading
           ? <div style={{ height: '75px' }}>
-              <Loader active>Loading many comments...</Loader>
+              <Loader active/>
             </div>
           : ( error
                 ? <Header as='h4' textAlign='center'>{ error }</Header>

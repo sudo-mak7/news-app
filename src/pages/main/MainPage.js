@@ -4,17 +4,20 @@ import 'semantic-ui-css/semantic.min.css'
 import ButtonUpdateNewsComponent from '../../components/ui/ButtonUpdateNewsComponent'
 import MainPageNewsSectionComponent from '../../components/news/MainPageNewsSectionComponent'
 import { useDispatch, useSelector } from 'react-redux'
-import { loading, setNews } from '../../redux/actions/actionCreator'
 import { getNews, getNewsIds } from '../../api/api'
 import { get100NewsIds } from '../../utils/get100NewsIds'
+import { setNews } from '../../redux/news/newsSlice'
+import { loading } from '../../redux/loading/loadingSlice'
 
 const MainPage = () => {
-  const news = useSelector(store => store.newsReducer.news || [])
-  const isLoading = useSelector(store => store.loaderReducer.isLoading || false)
+  const news = useSelector(state => state.news.news || [])
+  const isLoading = useSelector(state => state.loading.isLoading)
 
   const dispatch = useDispatch()
 
   const [ error, setError ] = useState('')
+
+  const errorMessage = 'Error loading news :('
 
   useEffect(() => {
     dispatch(loading(true))
@@ -23,12 +26,12 @@ const MainPage = () => {
       getNewsIds()
         .then(data =>
           !data
-            ? setError('Error loading news :(')
+            ? setError(errorMessage)
             : getNews(
                 get100NewsIds(
                   data
                     ? get100NewsIds(data)
-                    : setError('Error loading news :(')
+                    : setError(errorMessage)
                 )
             )
         )
@@ -51,10 +54,7 @@ const MainPage = () => {
     return () => clearInterval(autoUpdateNews)
   }, [])
 
-  const loaderRender =
-    <Loader active>
-      Lazy loading for 100 news is developing...<br/>Please, wait :)
-    </Loader>
+  const loaderRender = <Loader active/>
 
   const errorRender =
     <Header as='h2' color='blue' textAlign='center'>
