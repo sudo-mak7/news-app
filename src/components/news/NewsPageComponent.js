@@ -10,16 +10,20 @@ import {
 import CommentsSectionComponent from '../comments/CommentsSectionComponent'
 import { dateNormalizer } from '../../utils/dateNormalizer'
 import { useDispatch, useSelector } from 'react-redux'
-import { loading, setComments } from '../../redux/actions/actionCreator'
+import { setComments } from '../../redux/comments/commentsSlice'
+import { loading } from '../../redux/loading/loadingSlice'
 import { getComments } from '../../api/api'
 
 const NewsPageComponent = () => {
-  const news = useSelector(store =>
-    (store.currentNewsReducer.news || JSON.parse(localStorage.getItem('currentNews')))
+  const news = useSelector(state =>
+    (state.currentNews.currentNews || JSON.parse(localStorage.getItem('currentNews')))
     || []
   )
 
+
   const [ error, setError ] = useState('')
+
+  const errorMessage = 'Error loading comments :('
 
   const dispatch = useDispatch()
 
@@ -32,10 +36,10 @@ const NewsPageComponent = () => {
       getComments(
         news.kids
           ? news.kids
-          : setError('Error loading comments :(')
+          : setError(errorMessage)
       ).then(data => {
         !data
-          ? setError('Error loading comments :(')
+          ? setError(errorMessage)
           : dispatch(setComments(data))
         dispatch(loading(false))
       })
