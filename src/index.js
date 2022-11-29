@@ -10,4 +10,4 @@ root.render(
     <App />
   </Provider>
 )
-// TODO сложить все useSelectorы в один файл в сторе
+// TODO вернуть newstories в api, вернуть 100 новостей в utils

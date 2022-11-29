@@ -4,9 +4,10 @@ import NewsPageComponent from '../../components/news/NewsPageComponent'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCurrentItemById } from '../../api/api'
 import { setCurrentNews } from '../../redux/news/currentNewsSlice'
+import { getNewsIdSelector } from '../../redux/selectors'
 
 const NewsPage = (props) => {
-  const newsId = useSelector(state => state.setCurrentNewsId.id)
+  const newsId = useSelector(getNewsIdSelector)
   const dispatch = useDispatch()
 
   useEffect(() => {

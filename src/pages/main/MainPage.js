@@ -8,10 +8,11 @@ import { getNews, getNewsIds } from '../../api/api'
 import { get100NewsIds } from '../../utils/get100NewsIds'
 import { setNews } from '../../redux/news/newsSlice'
 import { loading } from '../../redux/loading/loadingSlice'
+import { getLoadingStateSelector, getNewsSelector } from '../../redux/selectors'
 
 const MainPage = () => {
-  const news = useSelector(state => state.news.news || [])
-  const isLoading = useSelector(state => state.loading.isLoading)
+  const news = useSelector(getNewsSelector)
+  const isLoading = useSelector(getLoadingStateSelector)
 
   const dispatch = useDispatch()
 

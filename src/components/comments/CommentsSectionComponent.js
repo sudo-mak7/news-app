@@ -5,11 +5,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getComments } from '../../api/api'
 import { loading } from '../../redux/loading/loadingSlice'
 import { setComments } from '../../redux/comments/commentsSlice'
+import {
+  getCommentsSelector,
+  getCurrentNewsSelector,
+  getLoadingStateSelector
+} from '../../redux/selectors'
 
 const CommentsSectionComponent = ({ error, setError })  => {
-  const news = useSelector(state => state.currentNews.currentNews)
-  const isLoading = useSelector(state => state.loading.isLoading)
-  const comments = useSelector(state => state.setComments.comments)
+  const news = useSelector(getCurrentNewsSelector)
+  const isLoading = useSelector(getLoadingStateSelector)
+  const comments = useSelector(getCommentsSelector)
 
   const dispatch = useDispatch()
 
