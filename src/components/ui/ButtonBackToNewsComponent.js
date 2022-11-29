@@ -1,10 +1,7 @@
 import React from 'react'
 import { Button, Icon } from 'semantic-ui-react'
-import { useNavigate  } from 'react-router-dom'
 
-const ButtonBackToNewsComponent = () => {
-
-  const navigate = useNavigate()
+const ButtonBackToNewsComponent = ({ props }) => {
   const clearCache = () => {
     localStorage.removeItem('currentNews')
     localStorage.removeItem('comments')
@@ -18,7 +15,7 @@ const ButtonBackToNewsComponent = () => {
       style={{ marginLeft: '1em', zIndex: '999', position: 'fixed' }}
       onClick={
         () => {
-          navigate(-1)
+          props.history.goBack()
           clearCache()
         }
       }
