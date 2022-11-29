@@ -1,5 +1,5 @@
 export const get100NewsIds = (allNewsIds) => {
   if (Array.isArray(allNewsIds)) {
-    return allNewsIds.splice(0, 100)
+    return allNewsIds.reverse().splice(0, 5)
   }
 }

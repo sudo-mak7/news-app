@@ -9,6 +9,8 @@ const CommentComponent = ({ id, by, text, kids, dead, deleted }) => {
   const [ answersLoading, setAnswersLoading ] = useState([])
   const [ error, setError ] = useState('')
 
+  const errorMessage = 'Error loading comments :('
+
   const [ isCollapsed, setIsCollapsed ] = useState(true)
 
   const handleCollapse = (e) => {
@@ -23,15 +25,15 @@ const CommentComponent = ({ id, by, text, kids, dead, deleted }) => {
     getCurrentItemById(id)
       .then(data => {
         !data
-          ? setError('Error loading comments :(')
+          ? setError(errorMessage)
           : getAnswers(
             data.kids
               ? data.kids
-              : setError('Error loading comments :(')
+              : setError(errorMessage)
             )
               .then(data => {
                 !data
-                  ? setError('Error loading comments :(')
+                  ? setError(errorMessage)
                   : setAnswers(data)
                 setAnswersLoading(false)
               })
@@ -42,7 +44,7 @@ const CommentComponent = ({ id, by, text, kids, dead, deleted }) => {
     <Comment id={ id }>
       <Comment.Avatar
       as='a'
-      src='https://charity13.ca/wp-content/uploads/2021/05/child-boy.png'
+      src='https://transcount.com/views/images/features/avatar.png'
     />
 
     { dead || deleted

@@ -1,12 +1,15 @@
 import React from 'react'
 import { Button, Icon } from 'semantic-ui-react'
 import { useDispatch } from 'react-redux'
-import { loading, setNews } from '../../redux/actions/actionCreator'
 import { getNews, getNewsIds } from '../../api/api'
 import { get100NewsIds } from '../../utils/get100NewsIds'
+import { loading } from '../../redux/loading/loadingSlice'
+import { setNews } from '../../redux/news/newsSlice'
 
 const ButtonUpdateNewsComponent = ({ setError }) => {
   const dispatch = useDispatch()
+
+  const errorMessage = 'Error loading news :('
 
   const updateNews = () => {
     dispatch(loading(true))
@@ -15,12 +18,12 @@ const ButtonUpdateNewsComponent = ({ setError }) => {
       getNewsIds()
         .then(data =>
           !data
-            ? setError('Error loading news :(')
+            ? setError(errorMessage)
             : getNews(
               get100NewsIds(
                 data
                   ? get100NewsIds(data)
-                  : setError('Error loading news :(')
+                  : setError(errorMessage)
               )
             )
         )
