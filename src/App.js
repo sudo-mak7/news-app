@@ -1,9 +1,9 @@
 import React from 'react'
 import {
   BrowserRouter,
-  Navigate,
+  Redirect,
   Route,
-  Routes,
+  Switch
 } from 'react-router-dom'
 import NavbarComponent from './components/ui/NavbarComponent'
 import MainPage from './pages/main/MainPage'
@@ -14,17 +14,18 @@ const App = () => {
     <BrowserRouter>
       <NavbarComponent/>
 
-      <Routes>
+      <Switch>
         <Route
+          exact
           path='/'
-          element={ <MainPage /> }
+          component={ MainPage }
         />
         <Route
           path='/news-page'
-          element={ <NewsPage /> }
-          render={ () => <Navigate to='/' /> }
+          component={ NewsPage }
         />
-      </Routes>
+        <Redirect to='/'/>
+      </Switch>
     </BrowserRouter>
   )
 }
