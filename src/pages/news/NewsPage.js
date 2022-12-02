@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
-import ButtonBackToNewsComponent from '../../components/ui/ButtonBackToNewsComponent'
-import NewsPageComponent from '../../components/news/NewsPageComponent'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCurrentItemById } from '../../api/api'
-import { setCurrentNews } from '../../redux/news/currentNewsSlice'
-import { getNewsIdSelector } from '../../redux/selectors'
+import { setCurrentNews } from '@/redux/news/currentNewsSlice'
+import { getNewsIdSelector } from '@/redux/selectors'
+import { getCurrentItemById } from '@/api/api'
+import ButtonBackToNewsComponent from '@/components/ui/ButtonBackToNewsComponent'
+import NewsPageComponent from '@/components/news/NewsPageComponent'
 
 const NewsPage = (props) => {
   const newsId = useSelector(getNewsIdSelector)

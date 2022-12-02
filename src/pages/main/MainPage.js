@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Container, Header, Loader } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
-import ButtonUpdateNewsComponent from '../../components/ui/ButtonUpdateNewsComponent'
-import MainPageNewsSectionComponent from '../../components/news/MainPageNewsSectionComponent'
 import { useDispatch, useSelector } from 'react-redux'
-import { getLoadingStateSelector, getNewsSelector } from '../../redux/selectors'
-import { loading } from '../../redux/loading/loadingSlice'
-import { getNews } from '../../api/api'
-import { newsGetter } from '../../utils/newsGetter'
+import { loading } from '@/redux/loading/loadingSlice'
+import { getLoadingStateSelector, getNewsSelector } from '@/redux/selectors'
+import { getNews } from '@/api/api'
+import { newsGetter } from '@/utils/newsGetter'
+import ButtonUpdateNewsComponent from '@/components/ui/ButtonUpdateNewsComponent'
+import MainPageNewsSectionComponent from '@/components/news/MainPageNewsSectionComponent'
 
 const MainPage = () => {
   const news = useSelector(getNewsSelector)

@@ -7,8 +7,8 @@ import {
 } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { setCurrentNewsId } from '../../redux/news/newsIdSlice'
-import { dateNormalizer } from '../../utils/dateNormalizer'
+import { setCurrentNewsId } from '@/redux/news/newsIdSlice'
+import { dateNormalizer } from '@/utils/dateNormalizer'
 
 const MainPageNewsSectionComponent = ({ title, by, score, time, id }) => {
   const dispatch = useDispatch()
