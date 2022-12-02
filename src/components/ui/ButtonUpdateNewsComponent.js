@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Icon } from 'semantic-ui-react'
 import { useDispatch } from 'react-redux'
-import { newsGetter } from '../../utils/newsGetter'
+import { newsGetter } from '@/utils/newsGetter'
 
 const ButtonUpdateNewsComponent = ({ setError }) => {
   const dispatch = useDispatch()

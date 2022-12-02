@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Label, Comment, Header } from 'semantic-ui-react'
+import { getAnswers, getCurrentItemById } from '@/api/api'
 import AnswerSectionComponent from './AnswerSectionComponent'
-import { getAnswers, getCurrentItemById } from '../../api/api'
 
 const CommentComponent = ({ id, by, text, kids, dead, deleted }) => {
 

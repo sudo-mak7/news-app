@@ -7,12 +7,12 @@ import {
   Label,
   Segment
 } from 'semantic-ui-react'
-import CommentsSectionComponent from '../comments/CommentsSectionComponent'
-import { dateNormalizer } from '../../utils/dateNormalizer'
 import { useDispatch, useSelector } from 'react-redux'
-import { setComments } from '../../redux/comments/commentsSlice'
-import { loading } from '../../redux/loading/loadingSlice'
-import { getComments } from '../../api/api'
+import { setComments } from '@/redux/comments/commentsSlice'
+import { loading } from '@/redux/loading/loadingSlice'
+import { getComments } from '@/api/api'
+import { dateNormalizer } from '@/utils/dateNormalizer'
+import CommentsSectionComponent from '../comments/CommentsSectionComponent'
 
 const NewsPageComponent = () => {
   const news = useSelector(state =>

@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react'
 import { Comment, Header, Loader } from 'semantic-ui-react'
-import CommentComponent from './CommentComponent'
 import { useDispatch, useSelector } from 'react-redux'
-import { getComments } from '../../api/api'
-import { loading } from '../../redux/loading/loadingSlice'
-import { setComments } from '../../redux/comments/commentsSlice'
 import {
   getCommentsSelector,
   getCurrentNewsSelector,
   getLoadingStateSelector
-} from '../../redux/selectors'
+} from '@/redux/selectors'
+import { getComments } from '@/api/api'
+import { loading } from '@/redux/loading/loadingSlice'
+import { setComments } from '@/redux/comments/commentsSlice'
+import CommentComponent from './CommentComponent'
 
 const CommentsSectionComponent = ({ error, setError })  => {
   const news = useSelector(getCurrentNewsSelector)
