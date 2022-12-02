@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Label, Comment, Header } from 'semantic-ui-react'
 import { getAnswers, getCurrentItemById } from '@/api/api'
+import { avatarUrl } from '@/api/url'
 import AnswerSectionComponent from './AnswerSectionComponent'
 
 const CommentComponent = ({ id, by, text, kids, dead, deleted }) => {
@@ -44,7 +45,7 @@ const CommentComponent = ({ id, by, text, kids, dead, deleted }) => {
     <Comment id={ id }>
       <Comment.Avatar
       as='a'
-      src='https://transcount.com/views/images/features/avatar.png'
+      src={ avatarUrl }
     />
 
     { dead || deleted

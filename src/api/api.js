@@ -1,6 +1,8 @@
+import { getNewsApiUrlId, newsApiUrl } from './url'
+
 export const getNewsIds = async () => {
   try {
-    const request = await fetch('https://hacker-news.firebaseio.com/v0/beststories.json')
+    const request = await fetch(newsApiUrl)
     return await request.json()
   } catch (e) {
     console.error(e)
@@ -13,7 +15,7 @@ export const getNews = async (ids) => {
 
   for (let i = 0; i < ids.length; i++) {
     try {
-      const request = await fetch(`https://hacker-news.firebaseio.com/v0/item/${ ids[i] }.json`)
+      const request = await fetch(getNewsApiUrlId(ids[i]))
       news.push(await request.json())
     } catch (e) {
       console.error(e)
@@ -29,7 +31,7 @@ export const getComments = async (ids) => {
 
   for (let i = 0; i < ids.length; i++) {
     try {
-      const request = await fetch(`https://hacker-news.firebaseio.com/v0/item/${ ids[i] }.json`)
+      const request = await fetch(getNewsApiUrlId(ids[i]))
       comments.push(await request.json())
     } catch (e) {
       console.error(e)
@@ -46,7 +48,7 @@ export const getAnswers = async (ids) => {
 
   for (let i = 0; i < ids.length; i++) {
     try {
-      const request = await fetch(`https://hacker-news.firebaseio.com/v0/item/${ ids[i] }.json`)
+      const request = await fetch(getNewsApiUrlId(ids[i]))
       answers.push(await request.json())
     } catch (e) {
       console.error(e)
@@ -59,7 +61,7 @@ export const getAnswers = async (ids) => {
 
 export const getCurrentItemById = async (id) => {
   try {
-    const request = await fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`)
+    const request = await fetch(getNewsApiUrlId(id))
     return await request.json()
   }
   catch (e) {
