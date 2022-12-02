@@ -10,4 +10,3 @@ root.render(
     <App />
   </Provider>
 )
-// TODO вернуть newstories в api, вернуть 100 новостей в utils
