@@ -5,9 +5,9 @@ import {
   Route,
   Routes,
 } from 'react-router-dom'
-import NavbarComponent from './components/ui/NavbarComponent'
-import MainPage from './pages/main/MainPage'
-import NewsPage from './pages/news/NewsPage'
+import NavbarComponent from '@components/ui/NavbarComponent'
+import MainPage from '@pages/main/MainPage'
+import CurrentNewsPage from '@pages/news/currentNewsPage'
 
 const App = () => {
   return (
@@ -21,7 +21,7 @@ const App = () => {
         />
         <Route
           path='/news-page'
-          element={ <NewsPage /> }
+          element={ <CurrentNewsPage /> }
           render={ () => <Navigate to='/' /> }
         />
       </Routes>

@@ -1,23 +1,31 @@
 import React from 'react'
-import { Comment, Loader } from 'semantic-ui-react'
-import CommentComponent from './CommentComponent'
+import { Comment, Header, Loader } from 'semantic-ui-react'
+import CommentComponent from '@components/comments/CommentComponent'
 
-const AnswerSectionComponent = ({ isCollapsed, answers, answersLoading }) => {
+const AnswerSectionComponent = ({ isCollapsed, answers, isLoading, error }) => {
+  const errorMessage = 'Error loading answers :('
+
   const commentsRender = answers.map(a =>
     <CommentComponent
       key={ a.id }
       id={ a.id }
+      error={ error }
+      errorMessage={ errorMessage }
       { ...a }
     />
   )
 
   return (
-    <Comment.Group collapsed={ isCollapsed }>
-      { answersLoading
-          ? <Loader active inline='centered'/>
-          : commentsRender
-      }
-    </Comment.Group>
+    isCollapsed
+      ? ''
+      : <Comment.Group>
+          { isLoading
+              ? <Loader active inline='centered'/>
+              : error
+                  ? <Header as='h4' textAlign='center'>{ errorMessage }</Header>
+                  : commentsRender
+          }
+        </Comment.Group>
   )
 }
 
