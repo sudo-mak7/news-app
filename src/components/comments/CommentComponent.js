@@ -1,109 +1,95 @@
 import React, { useState } from 'react'
 import { Label, Comment, Header } from 'semantic-ui-react'
-import { getAnswers, getCurrentItemById } from '@/api/api'
-import { avatarUrl } from '@/api/url'
-import AnswerSectionComponent from './AnswerSectionComponent'
+import { useDispatch } from 'react-redux'
+import { fetchAnswers } from '@redux/comments/answersSlice'
+import { avatarUrl } from '@api/url'
+import AnswerSectionComponent from '@components/comments/AnswerSectionComponent'
 
-const CommentComponent = ({ id, by, text, kids, dead, deleted }) => {
-
-  const [ answers, setAnswers ] = useState([])
-  const [ answersLoading, setAnswersLoading ] = useState([])
+const CommentComponent = ({ id, by, text, kids, dead, deleted, errorMessage }) => {
+  const [ answers, setAnswersState ] = useState([])
+  const [ isLoading, setIsLoading ] = useState(false)
   const [ error, setError ] = useState('')
 
-  const errorMessage = 'Error loading comments :('
+  const dispatch = useDispatch()
 
   const [ isCollapsed, setIsCollapsed ] = useState(true)
 
   const handleCollapse = (e) => {
-    isCollapsed === false
-      ? setIsCollapsed(true)
-      : setIsCollapsed(false)
+    isCollapsed === true
+      ? setIsCollapsed(false)
+      : setIsCollapsed(true)
 
     const id = e.currentTarget.id
 
-    setAnswersLoading(true)
-
-    getCurrentItemById(id)
-      .then(data => {
-        !data
-          ? setError(errorMessage)
-          : getAnswers(
-            data.kids
-              ? data.kids
-              : setError(errorMessage)
-            )
-              .then(data => {
-                !data
-                  ? setError(errorMessage)
-                  : setAnswers(data)
-                setAnswersLoading(false)
-              })
-    })
+    if (isCollapsed) {
+      dispatch(fetchAnswers({id, setAnswersState, setIsLoading, setError}))
+    }
   }
 
   return (
-    <Comment id={ id }>
-      <Comment.Avatar
-      as='a'
-      src={ avatarUrl }
-    />
-
-    { dead || deleted
-      ? <Comment.Content>
-        <Comment.Author as='a' style={{ color: 'grey' }}>DELETED</Comment.Author>
-        <Comment.Text style={{ color: 'grey' }}>Comment deleted</Comment.Text>
-
-        <Comment.Actions>
-          { !kids
-              ? ''
-              : <Label
-                size='mini'
-                style={{ cursor: 'pointer' }}
-                id={ id }
-                onClick={ (e) => handleCollapse(e) }
-              >
-                { isCollapsed === true
-                    ? 'Show answers'
-                    : 'Hide answers'
-                }
-              </Label>
-          }
-        </Comment.Actions>
-      </Comment.Content>
-
-      : <Comment.Content>
-        <Comment.Author as='a'>{ by }</Comment.Author>
-        <Comment.Text
-          dangerouslySetInnerHTML={{ __html: text }}
+    error
+      ? <Header as='h4' textAlign='center'>{ errorMessage }</Header>
+      : <Comment id={ id }>
+          <Comment.Avatar
+          as='a'
+          src={ avatarUrl }
         />
-        <Comment.Actions>
-          { !kids
-              ? ''
-              : <Label
-                size='mini'
-                style={{ cursor: 'pointer' }}
-                id={ id }
-                onClick={ (e) => handleCollapse(e) }
-              >
-                { isCollapsed === true
-                    ? 'Show answers'
-                    : 'Hide answers'
-                }
-              </Label>
-          }
-        </Comment.Actions>
-      </Comment.Content>
-    }
+
+        { dead || deleted
+            ? <Comment.Content>
+                <Comment.Author as='a' style={{ color: 'grey' }}>DELETED</Comment.Author>
+                <Comment.Text style={{ color: 'grey' }}>Comment deleted</Comment.Text>
+
+                <Comment.Actions>
+                  { !kids
+                      ? ''
+                      : <Label
+                        size='mini'
+                        style={{ cursor: 'pointer' }}
+                        id={ id }
+                        onClick={ (e) => handleCollapse(e) }
+                      >
+                        { isCollapsed === true
+                            ? 'Show answers'
+                            : 'Hide answers'
+                        }
+                      </Label>
+                  }
+                </Comment.Actions>
+              </Comment.Content>
+
+            : <Comment.Content>
+                <Comment.Author as='a'>{ by }</Comment.Author>
+                <Comment.Text
+                  dangerouslySetInnerHTML={{ __html: text }}
+                />
+                <Comment.Actions>
+                  { !kids
+                      ? ''
+                      : <Label
+                        size='mini'
+                        style={{ cursor: 'pointer' }}
+                        id={ id }
+                        onClick={ (e) => handleCollapse(e) }
+                      >
+                        { isCollapsed === true
+                            ? 'Show answers'
+                            : 'Hide answers'
+                        }
+                      </Label>
+                  }
+                </Comment.Actions>
+            </Comment.Content>
+        }
 
     { !kids
         ? ''
-        : error
-            ? <Header as='h4' textAlign='center'>{ error }</Header>
-            : <AnswerSectionComponent
-                isCollapsed={ isCollapsed }
-                answers={ answers }
-                answersLoading={ answersLoading }
-              />
+        : <AnswerSectionComponent
+            isCollapsed={ isCollapsed }
+            answers={ answers }
+            isLoading={ isLoading }
+            error={ error }
+      />
     }
   </Comment>
   )

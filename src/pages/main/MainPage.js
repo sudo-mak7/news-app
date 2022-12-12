@@ -1,76 +1,103 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Container, Header, Loader } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { loading } from '@/redux/loading/loadingSlice'
-import { getLoadingStateSelector, getNewsSelector } from '@/redux/selectors'
-import { getNews } from '@/api/api'
-import { newsGetter } from '@/utils/newsGetter'
-import ButtonUpdateNewsComponent from '@/components/ui/ButtonUpdateNewsComponent'
-import MainPageNewsSectionComponent from '@/components/news/MainPageNewsSectionComponent'
+import {
+  getNewsIdsErrorSelector,
+  getNewsIdsLoaderSelector,
+  getNewsIdsSelector,
+  getNewsSelector,
+  getNewsLoaderSelector,
+  getNewsErrorSelector,
+  getCurrentPageNumberSelector,
+  getCurrentPageNewsSelector,
+  getPagesLeftSelector
+} from '@redux/selectors'
+import { clearNewsIds, fetchNewsIds } from '@redux/news/newsIdsSlice'
+import { clearNews, fetchNewsByIds } from '@redux/news/newsSlice'
+import {
+  setCurrentPageNumber,
+  setCurrentPageNews,
+  setPagesLeft,
+  clearPaginationState
+} from '@redux/pagination/paginationSlice'
+import ButtonUpdateNewsComponent from '@components/ui/ButtonUpdateNewsComponent'
+import MainPageNewsSectionComponent from '@components/news/MainPageNewsSectionComponent'
+import { lazyLoading } from '@utils/lazyLoading'
+import { windowScrollUp } from '@utils/windowScrollUp'
 
 const MainPage = () => {
-  const news = useSelector(getNewsSelector)
-  const isLoading = useSelector(getLoadingStateSelector)
-
   const dispatch = useDispatch()
 
-  const [ error, setError ] = useState('')
+  const newsIds = useSelector(getNewsIdsSelector)
+  const newsIdsIsLoading = useSelector(getNewsIdsLoaderSelector)
+  const newsIdsLoadingError = useSelector(getNewsIdsErrorSelector)
+
+  const news = useSelector(getNewsSelector)
+  const newsIsLoading = useSelector(getNewsLoaderSelector)
+  const newsLoadingError = useSelector(getNewsErrorSelector)
+
   const errorMessage = 'Error loading news :('
 
-  const [ currentPage, setCurrentPage ] = useState(0)
-  const [ currentPageNews, setCurrentPageNews ] = useState([])
-  const [ totalCountPagesNews, setTotalCountPagesNews ] = useState(0)
+  const currentPage = useSelector(getCurrentPageNumberSelector)
+  const currentPageNews = useSelector(getCurrentPageNewsSelector)
+  const pagesLeft = useSelector(getPagesLeftSelector)
 
   useEffect(() => {
-    newsGetter(dispatch, setError, errorMessage)
+    windowScrollUp()
+    if (!newsIds.length) {
+      dispatch(fetchNewsIds())
+    }
   }, [])
 
   useEffect(() => {
     if (news.length) {
-      getNews(news[0]).then(data => {
-        setCurrentPageNews(data)
-        dispatch(loading(false))
-      })
+      dispatch(setCurrentPageNews(news))
+    }
 
-      setTotalCountPagesNews(news.length - 1)
+    if (!pagesLeft && newsIds.length) {
+      dispatch(setPagesLeft(newsIds.length - 1))
+    }
+
+    if (pagesLeft) {
+      dispatch(setPagesLeft(pagesLeft - 1))
     }
   }, [news])
 
   useEffect(() => {
-    if (!isLoading) {
-      document.addEventListener('scroll', scrollHandler)
+    if (!newsIdsIsLoading && !newsIsLoading) {
       return () => {
-        document.removeEventListener('scroll', scrollHandler)
+
+        dispatch(clearPaginationState())
+        dispatch(clearNews())
+        dispatch(clearNewsIds())
       }
     }
   }, [])
 
   useEffect(() => {
-    if (currentPage !== 0 && !isLoading && totalCountPagesNews) {
-      getNews(news[currentPage]).then(data => {
-        setCurrentPageNews(prevState => prevState.concat(data))
-        setTotalCountPagesNews(prevState => prevState - 1)
-      })
+    if (currentPage !== 0 && !newsIdsIsLoading && currentPageNews.length) {
+       dispatch(fetchNewsByIds(newsIds[currentPage]))
     }
   }, [currentPage])
 
-  const scrollHandler = (e) => {
-    if (
-      (e.target.documentElement.scrollHeight - (
-        e.target.documentElement.scrollTop + window.innerHeight
-      )
-      === 0) && !isLoading
-    ) {
-      setCurrentPage(prevState => prevState + 1)
-    }
+  const lazyLoadingCallback = () => {
+    dispatch(setCurrentPageNumber())
   }
+
+  const target = document.querySelector('#loader')
+
+  useEffect(() => {
+    if (!newsIdsIsLoading && !newsIsLoading && target) {
+      lazyLoading(lazyLoadingCallback, target)
+    }
+  }, [target])
 
   const loaderRender = <Loader active/>
 
   const errorRender =
     <Header as='h2' color='blue' textAlign='center'>
-      { error }
+      { errorMessage }
     </Header>
 
   const newsRender = currentPageNews.map(n =>
@@ -81,23 +108,25 @@ const MainPage = () => {
   )
 
   return (
-    <main>
-      <ButtonUpdateNewsComponent setError={ setError } />
+    <main style={{ overflow: 'hidden' }}>
+      <ButtonUpdateNewsComponent/>
 
       <Container text style={{ marginTop: '5em' }}>
-        { error || ( news.length === [] && !isLoading )
-          ? errorRender
-          : ( isLoading
-              ? loaderRender
-              : newsRender
-            )
+        { newsIdsLoadingError
+            ? errorRender
+            : ( newsIdsIsLoading || newsIsLoading ) && !currentPageNews.length
+                ? loaderRender
+                : newsRender
         }
 
-        { !isLoading && totalCountPagesNews
-          ? <div style={{ height: '50px' }}>
-              <Loader active inline='centered' />
-            </div>
-          : ''
+        { !newsIdsIsLoading
+            && pagesLeft > 0
+                ? <div id='loader' style={{ height: '50px' }}>
+                    <Loader active inline='centered' />
+                  </div>
+                : newsLoadingError
+                   ? errorRender
+                   : ''
         }
       </Container>
     </main>

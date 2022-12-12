@@ -1,46 +1,26 @@
-import React, { useEffect } from 'react'
-import { Comment, Header, Loader } from 'semantic-ui-react'
-import { useDispatch, useSelector } from 'react-redux'
+import React from 'react'
+import { Comment, Loader } from 'semantic-ui-react'
+import {  useSelector } from 'react-redux'
 import {
-  getCommentsSelector,
-  getCurrentNewsSelector,
-  getLoadingStateSelector
-} from '@/redux/selectors'
-import { getComments } from '@/api/api'
-import { loading } from '@/redux/loading/loadingSlice'
-import { setComments } from '@/redux/comments/commentsSlice'
-import CommentComponent from './CommentComponent'
+  getCommentsErrorSelector,
+  getCommentsLoaderSelector,
+  getCommentsSelector
+} from '@redux/selectors'
+import CommentComponent from '@components/comments/CommentComponent'
 
-const CommentsSectionComponent = ({ error, setError })  => {
-  const news = useSelector(getCurrentNewsSelector)
-  const isLoading = useSelector(getLoadingStateSelector)
+const CommentsSectionComponent = ()  => {
+  const isLoading = useSelector(getCommentsLoaderSelector)
   const comments = useSelector(getCommentsSelector)
-
-  const dispatch = useDispatch()
+  const error = useSelector(getCommentsErrorSelector)
 
   const errorMessage = 'Error loading comments :('
-
-  useEffect(() => {
-    if (news?.hasOwnProperty('kids')) {
-      dispatch(loading(true))
-
-      getComments(
-        news.kids
-          ? news.kids
-          : setError(errorMessage)
-      ).then(data => {
-        !data
-          ? setError(errorMessage)
-          : dispatch(setComments(data))
-        dispatch(loading(false))
-      })
-    }
-  }, [])
 
   const commentsRender = comments.map(c =>
       <CommentComponent
         key={ c?.id }
         id={ c?.id }
+        error={ error }
+        errorMessage={ errorMessage }
         { ...c }
       />
   )
@@ -51,10 +31,7 @@ const CommentsSectionComponent = ({ error, setError })  => {
           ? <div style={{ height: '75px' }}>
               <Loader active/>
             </div>
-          : ( error
-                ? <Header as='h4' textAlign='center'>{ error }</Header>
-                : commentsRender
-          )
+          : commentsRender
       }
     </Comment.Group>
   )
