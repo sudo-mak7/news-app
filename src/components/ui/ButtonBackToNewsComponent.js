@@ -11,10 +11,11 @@ const ButtonBackToNewsComponent = () => {
       size='big'
       color='blue'
       style={{
-        marginLeft: '1em',
         zIndex: '999',
-        position: 'fixed'
-    }}
+        position: 'absolute',
+        top: '0.25em',
+        left: '0.25em'
+      }}
       onClick={ () => { navigate(-1) } }
     >
       <Icon name='arrow left'></Icon>

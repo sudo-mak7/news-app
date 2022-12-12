@@ -5,7 +5,7 @@ const NavbarComponent = () => {
   return (
     <Menu fixed='top' widths={ 1 }>
       <Menu.Item as='a' header>
-        <Header as='h1' textAlign='center'>BEST NEWS</Header>
+        <Header as='h1' textAlign='center'>LATEST NEWS</Header>
       </Menu.Item>
     </Menu>
   )
