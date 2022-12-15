@@ -1,7 +1,7 @@
-import React from 'react'
+import * as React from 'react'
 import { Header, Menu } from 'semantic-ui-react'
 
-const NavbarComponent = () => {
+const NavbarComponent = (): JSX.Element => {
   return (
     <Menu fixed='top' widths={ 1 }>
       <Menu.Item as='a' header>

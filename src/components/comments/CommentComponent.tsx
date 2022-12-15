@@ -1,28 +1,37 @@
-import React, { useState } from 'react'
+import * as React from 'react'
+import { useState } from 'react'
 import { Label, Comment, Header } from 'semantic-ui-react'
-import { useDispatch } from 'react-redux'
+import { useAppDispatch } from '@redux/reduxHooks'
+import { useAppSelector } from '@redux/reduxHooks'
+import { getCommentsErrorSelector } from '@redux/selectors'
 import { fetchAnswers } from '@redux/comments/answersSlice'
 import { avatarUrl } from '@api/url'
 import AnswerSectionComponent from '@components/comments/AnswerSectionComponent'
+import { CommentsInterface } from '@common-types/commentsInterface'
 
-const CommentComponent = ({ id, by, text, kids, dead, deleted, errorMessage }) => {
-  const [ answers, setAnswersState ] = useState([])
-  const [ isLoading, setIsLoading ] = useState(false)
-  const [ error, setError ] = useState('')
+const CommentComponent = (
+  { id, by, text, kids, dead, deleted }: CommentsInterface
+): JSX.Element => {
+  const commentsLoadingError = useAppSelector(getCommentsErrorSelector)
 
-  const dispatch = useDispatch()
+  const [ isCollapsed, setIsCollapsed ] = useState<boolean>(true)
+  const [ answers, setAnswersState ] = useState<CommentsInterface[]>([])
+  const [ isLoading, setIsLoading ] = useState<boolean>(false)
+  const [ error, setError ] = useState<any>(commentsLoadingError)
 
-  const [ isCollapsed, setIsCollapsed ] = useState(true)
+  const errorMessage = 'Error loading comments :('
 
-  const handleCollapse = (e) => {
+  const dispatch = useAppDispatch()
+
+  const handleCollapse = (e: React.MouseEvent<HTMLButtonElement>): void => {
     isCollapsed === true
       ? setIsCollapsed(false)
       : setIsCollapsed(true)
 
-    const id = e.currentTarget.id
+    const id = +e.currentTarget.id
 
     if (isCollapsed) {
-      dispatch(fetchAnswers({id, setAnswersState, setIsLoading, setError}))
+      dispatch(fetchAnswers({ id, setAnswersState, setIsLoading, setError }))
     }
   }
 
@@ -47,7 +56,9 @@ const CommentComponent = ({ id, by, text, kids, dead, deleted, errorMessage }) =
                         size='mini'
                         style={{ cursor: 'pointer' }}
                         id={ id }
-                        onClick={ (e) => handleCollapse(e) }
+                        onClick={
+                          (e: React.MouseEvent<HTMLButtonElement>): void => handleCollapse(e)
+                        }
                       >
                         { isCollapsed === true
                             ? 'Show answers'
@@ -70,7 +81,9 @@ const CommentComponent = ({ id, by, text, kids, dead, deleted, errorMessage }) =
                         size='mini'
                         style={{ cursor: 'pointer' }}
                         id={ id }
-                        onClick={ (e) => handleCollapse(e) }
+                        onClick={
+                          (e: React.MouseEvent<HTMLButtonElement>): void => handleCollapse(e)
+                        }
                       >
                         { isCollapsed === true
                             ? 'Show answers'
@@ -88,7 +101,6 @@ const CommentComponent = ({ id, by, text, kids, dead, deleted, errorMessage }) =
             isCollapsed={ isCollapsed }
             answers={ answers }
             isLoading={ isLoading }
-            error={ error }
       />
     }
   </Comment>

@@ -1,12 +1,16 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { NewsInterface } from '@common-types/newsInterface'
+import { PaginationStateInterface } from '@redux/types'
+
+const initialState = {
+  currentPage: -1,
+  currentPageNews: [],
+  pagesLeft: null
+} as PaginationStateInterface
 
 export const paginationSlice = createSlice({
   name: 'pagination',
-  initialState: {
-    currentPage: -1,
-    currentPageNews: [],
-    pagesLeft: null
-  },
+  initialState,
   reducers: {
     setCurrentPageNumber: (state) => {
       state.currentPage =
@@ -14,13 +18,13 @@ export const paginationSlice = createSlice({
           ? state.currentPage + 1
           : state.currentPage
     },
-    setCurrentPageNews: (state, action) => {
+    setCurrentPageNews: (state, action: PayloadAction<NewsInterface[]>) => {
       state.currentPageNews =
         !state.currentPageNews.length
           ? action.payload
           : [...state.currentPageNews, ...action.payload]
     },
-    setPagesLeft: (state, action) => {
+    setPagesLeft: (state, action: PayloadAction<number>) => {
       state.pagesLeft = action.payload
     },
     clearPaginationState: (state) => {

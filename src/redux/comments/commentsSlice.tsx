@@ -1,9 +1,11 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { getItemFromApiWithUrlById } from '@api/url'
+import { CommentsInterface } from '@common-types/commentsInterface'
+import { CommentsStateInterface } from '@redux/types'
 
 export const fetchComments = createAsyncThunk(
   'comments/fetchComments',
-  async (ids, { rejectWithValue, dispatch }) => {
+  async (ids: number[], { rejectWithValue, dispatch }) => {
     const comments = []
 
     for (let i = 0; i < ids.length; i++) {
@@ -25,15 +27,17 @@ export const fetchComments = createAsyncThunk(
   }
 )
 
+const initialState = {
+  comments: [],
+  loading: false,
+  error: null
+} as CommentsStateInterface
+
 export const commentsSlice = createSlice({
   name: 'comments',
-  initialState: {
-    comments: [],
-    loading: false,
-    error: null
-  },
+  initialState,
   reducers: {
-    setComments: (state, action) => {
+    setComments: (state, action: PayloadAction<CommentsInterface[]>) => {
       state.comments = action.payload
     }
   },
@@ -45,7 +49,7 @@ export const commentsSlice = createSlice({
       .addCase(fetchComments.fulfilled, (state) => {
         state.loading = false
       })
-      .addCase(fetchComments.rejected, (state, action) => {
+      .addCase(fetchComments.rejected, (state, action: PayloadAction<any>) => {
         state.error = action.payload
       })
   }

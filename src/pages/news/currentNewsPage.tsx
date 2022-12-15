@@ -1,8 +1,8 @@
-import React from 'react'
+import * as React from 'react'
 import ButtonBackToNewsComponent from '@components/ui/ButtonBackToNewsComponent'
 import NewsPageComponent from '@components/news/NewsPageComponent'
 
-const CurrentNewsPage = () => {
+const CurrentNewsPage = (): JSX.Element => {
   return (
     <main>
       <ButtonBackToNewsComponent/>

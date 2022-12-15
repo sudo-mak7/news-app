@@ -1,7 +1,8 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { newsApiUrl } from '@api/url'
 import { getPaginatedNewsIds } from '@utils/getPaginatedNewsIds'
 import { fetchNewsByIds } from '@redux/news/newsSlice'
+import { NewsIdsStateInterface } from '@redux/types'
 
 export const fetchNewsIds = createAsyncThunk(
   'newsIds/fetchNewsIds',
@@ -23,15 +24,17 @@ export const fetchNewsIds = createAsyncThunk(
   }
 )
 
+const initialState = {
+  newsIds: [],
+  loading: false,
+  error: null
+} as NewsIdsStateInterface
+
 export const newsIdsSlice = createSlice({
   name: 'newsIds',
-  initialState: {
-    newsIds: [],
-    loading: false,
-    error: null
-  },
+  initialState,
   reducers: {
-    setNewsIds: (state, action) => {
+    setNewsIds: (state, action: PayloadAction<[number][]>) => {
       state.newsIds = action.payload
     },
     clearNewsIds: (state) => {
@@ -46,7 +49,7 @@ export const newsIdsSlice = createSlice({
     .addCase(fetchNewsIds.fulfilled, (state) => {
       state.loading = false
     })
-    .addCase(fetchNewsIds.rejected, (state, action) => {
+    .addCase(fetchNewsIds.rejected, (state, action: PayloadAction<any>) => {
       state.loading = false
       state.error = action.payload
     })

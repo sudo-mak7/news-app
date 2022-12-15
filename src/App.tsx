@@ -1,15 +1,14 @@
-import React from 'react'
+import * as React from 'react'
 import {
   BrowserRouter,
-  Navigate,
   Route,
-  Routes,
+  Routes
 } from 'react-router-dom'
 import NavbarComponent from '@components/ui/NavbarComponent'
 import MainPage from '@pages/main/MainPage'
 import CurrentNewsPage from '@pages/news/currentNewsPage'
 
-const App = () => {
+const App = (): JSX.Element => {
   return (
     <BrowserRouter>
       <NavbarComponent/>
@@ -22,7 +21,6 @@ const App = () => {
         <Route
           path='/news-page'
           element={ <CurrentNewsPage /> }
-          render={ () => <Navigate to='/' /> }
         />
       </Routes>
     </BrowserRouter>

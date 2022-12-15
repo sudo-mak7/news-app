@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import * as React from 'react'
+import { useEffect } from 'react'
 import { Container, Header, Loader } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
-import { useDispatch, useSelector } from 'react-redux'
+import { useAppDispatch, useAppSelector } from '@redux/reduxHooks'
 import {
   getNewsIdsErrorSelector,
   getNewsIdsLoaderSelector,
@@ -25,23 +26,24 @@ import ButtonUpdateNewsComponent from '@components/ui/ButtonUpdateNewsComponent'
 import MainPageNewsSectionComponent from '@components/news/MainPageNewsSectionComponent'
 import { lazyLoading } from '@utils/lazyLoading'
 import { windowScrollUp } from '@utils/windowScrollUp'
+import { NewsInterface } from '@common-types/newsInterface'
 
-const MainPage = () => {
-  const dispatch = useDispatch()
+const MainPage = (): JSX.Element => {
+  const dispatch = useAppDispatch()
 
-  const newsIds = useSelector(getNewsIdsSelector)
-  const newsIdsIsLoading = useSelector(getNewsIdsLoaderSelector)
-  const newsIdsLoadingError = useSelector(getNewsIdsErrorSelector)
+  const newsIds = useAppSelector(getNewsIdsSelector)
+  const newsIdsIsLoading = useAppSelector(getNewsIdsLoaderSelector)
+  const newsIdsLoadingError = useAppSelector(getNewsIdsErrorSelector)
 
-  const news = useSelector(getNewsSelector)
-  const newsIsLoading = useSelector(getNewsLoaderSelector)
-  const newsLoadingError = useSelector(getNewsErrorSelector)
+  const news = useAppSelector(getNewsSelector)
+  const newsIsLoading = useAppSelector(getNewsLoaderSelector)
+  const newsLoadingError = useAppSelector(getNewsErrorSelector)
 
   const errorMessage = 'Error loading news :('
 
-  const currentPage = useSelector(getCurrentPageNumberSelector)
-  const currentPageNews = useSelector(getCurrentPageNewsSelector)
-  const pagesLeft = useSelector(getPagesLeftSelector)
+  const currentPage = useAppSelector(getCurrentPageNumberSelector)
+  const currentPageNews = useAppSelector(getCurrentPageNewsSelector)
+  const pagesLeft = useAppSelector(getPagesLeftSelector)
 
   useEffect(() => {
     windowScrollUp()
@@ -100,7 +102,7 @@ const MainPage = () => {
       { errorMessage }
     </Header>
 
-  const newsRender = currentPageNews.map(n =>
+  const newsRender = currentPageNews.map((n: NewsInterface) =>
     <MainPageNewsSectionComponent
       key={ n.id }
       { ...n }

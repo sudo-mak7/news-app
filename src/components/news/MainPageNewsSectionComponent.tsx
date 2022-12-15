@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import {
   Header,
   Icon,
@@ -6,16 +6,23 @@ import {
   Segment
 } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useAppDispatch } from '@redux/reduxHooks'
 import { setCurrentNewsId } from '@redux/news/newsByIdSlice'
 import { dateNormalizer } from '@utils/dateNormalizer'
+import { NewsInterface } from '@common-types/newsInterface'
 
-const MainPageNewsSectionComponent = ({ title, by, score, time, id }) => {
-  const dispatch = useDispatch()
+const MainPageNewsSectionComponent = ({
+                                        title,
+                                        by,
+                                        score,
+                                        time,
+                                        id
+}: NewsInterface): JSX.Element => {
+  const dispatch = useAppDispatch()
 
   const date = dateNormalizer(time)
 
-  const getNewsId = (e) => {
+  const getNewsId = (e: React.MouseEvent<HTMLButtonElement>): void => {
     localStorage.removeItem('currentNewsId')
     const id = e.currentTarget.id
     dispatch(setCurrentNewsId(id))
@@ -25,7 +32,7 @@ const MainPageNewsSectionComponent = ({ title, by, score, time, id }) => {
   return (
     <Segment.Group
       id={ id }
-      onClick={ (e) => getNewsId(e) }
+      onClick={ (e): void => getNewsId(e) }
     >
       <Link to='/news-page'>
         <Segment attached='top' color='blue'>

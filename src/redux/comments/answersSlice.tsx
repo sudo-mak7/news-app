@@ -1,9 +1,16 @@
+import * as React from 'react'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { getItemFromApiWithUrlById } from '@api/url'
+import { fetchAnswersInterface } from '@redux/types'
 
 export const fetchAnswers = createAsyncThunk(
   'comments/fetchAnswers',
-  async ({ id, setAnswersState, setIsLoading, setError }, _) => {
+  async ({
+           id,
+           setAnswersState,
+           setIsLoading,
+           setError
+  }: fetchAnswersInterface, _) => {
     setIsLoading(true)
 
     const response = await fetch(getItemFromApiWithUrlById(id))
@@ -35,7 +42,10 @@ export const fetchAnswers = createAsyncThunk(
 )
 
 export const answersSlice = createSlice({
-  name: 'answers'
+  name: 'answers',
+  initialState: undefined,
+  reducers: undefined,
+  extraReducers: undefined
 })
 
 export default answersSlice.reducer

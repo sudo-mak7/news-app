@@ -1,27 +1,33 @@
-import React from 'react'
+import * as React from 'react'
 import { Comment, Header, Loader } from 'semantic-ui-react'
+import { useAppSelector } from '@redux/reduxHooks'
+import { getCommentsErrorSelector } from '@redux/selectors'
 import CommentComponent from '@components/comments/CommentComponent'
+import { CommentsInterface } from '@common-types/commentsInterface'
+import { AnswerSectionComponentInterface } from '@components/types'
 
-const AnswerSectionComponent = ({ isCollapsed, answers, isLoading, error }) => {
+const AnswerSectionComponent = (
+  { isCollapsed, answers, isLoading }: AnswerSectionComponentInterface
+): JSX.Element => {
+  const commentsLoadingError = useAppSelector(getCommentsErrorSelector)
+
   const errorMessage = 'Error loading answers :('
 
-  const commentsRender = answers.map(a =>
+  const commentsRender = answers.map((a: CommentsInterface) =>
     <CommentComponent
       key={ a.id }
       id={ a.id }
-      error={ error }
-      errorMessage={ errorMessage }
       { ...a }
     />
   )
 
   return (
     isCollapsed
-      ? ''
+      ? null
       : <Comment.Group>
           { isLoading
               ? <Loader active inline='centered'/>
-              : error
+              : commentsLoadingError
                   ? <Header as='h4' textAlign='center'>{ errorMessage }</Header>
                   : commentsRender
           }
