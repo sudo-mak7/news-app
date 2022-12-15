@@ -1,14 +1,7 @@
 import * as React from 'react'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { getItemFromApiWithUrlById } from '@api/url'
-import { CommentsInterface } from '@common-types/commentsInterface'
-
-interface fetchAnswersInterface {
-  id: number,
-  setAnswersState: React.Dispatch<React.SetStateAction<CommentsInterface[]>>,
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  setError: React.Dispatch<React.SetStateAction<any>>
-}
+import { fetchAnswersInterface } from '@redux/types'
 
 export const fetchAnswers = createAsyncThunk(
   'comments/fetchAnswers',

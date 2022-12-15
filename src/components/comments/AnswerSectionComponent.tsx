@@ -4,12 +4,7 @@ import { useAppSelector } from '@redux/reduxHooks'
 import { getCommentsErrorSelector } from '@redux/selectors'
 import CommentComponent from '@components/comments/CommentComponent'
 import { CommentsInterface } from '@common-types/commentsInterface'
-
-interface AnswerSectionComponentInterface {
-  isCollapsed: boolean,
-  answers: CommentsInterface[],
-  isLoading: boolean
-}
+import { AnswerSectionComponentInterface } from '@components/types'
 
 const AnswerSectionComponent = (
   { isCollapsed, answers, isLoading }: AnswerSectionComponentInterface

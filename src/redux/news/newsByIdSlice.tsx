@@ -1,12 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-
-interface NewsByIdState {
-  id: number
-}
+import { NewsByIdStateInterface } from '@redux/types'
 
 const initialState = {
   id: JSON.parse(localStorage.getItem('currentNewsId')) || null
-} as NewsByIdState
+} as NewsByIdStateInterface
 
 export const newsByIdSlice = createSlice({
   name: 'newsById',

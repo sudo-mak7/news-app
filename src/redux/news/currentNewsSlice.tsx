@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { getItemFromApiWithUrlById } from '@api/url'
 import { fetchComments } from '@redux/comments/commentsSlice'
 import { NewsInterface } from '@common-types/newsInterface'
+import { CurrentNewsStateInterface } from '@redux/types'
 
 export const fetchCurrentNewsById = createAsyncThunk(
   'currentNews/fetchCurrentNewsById',
@@ -22,17 +23,11 @@ export const fetchCurrentNewsById = createAsyncThunk(
   }
 )
 
-interface CurrentNewsState {
-  currentNews: NewsInterface,
-  loading: boolean,
-  error: any
-}
-
 const initialState = {
   currentNews: {},
   loading: false,
   error: null
-} as CurrentNewsState
+} as CurrentNewsStateInterface
 
 export const currentNewsSlice = createSlice({
   name: 'currentNews',

@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { newsApiUrl } from '@api/url'
 import { getPaginatedNewsIds } from '@utils/getPaginatedNewsIds'
 import { fetchNewsByIds } from '@redux/news/newsSlice'
+import { NewsIdsStateInterface } from '@redux/types'
 
 export const fetchNewsIds = createAsyncThunk(
   'newsIds/fetchNewsIds',
@@ -23,17 +24,11 @@ export const fetchNewsIds = createAsyncThunk(
   }
 )
 
-interface NewsIdsState {
-  newsIds: [number][],
-  loading: boolean,
-  error: any
-}
-
 const initialState = {
   newsIds: [],
   loading: false,
   error: null
-} as NewsIdsState
+} as NewsIdsStateInterface
 
 export const newsIdsSlice = createSlice({
   name: 'newsIds',

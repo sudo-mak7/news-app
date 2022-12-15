@@ -1,17 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { NewsInterface } from '@common-types/newsInterface'
-
-interface PaginationState {
-  currentPage: number,
-  currentPageNews: NewsInterface[],
-  pagesLeft: number
-}
+import { PaginationStateInterface } from '@redux/types'
 
 const initialState = {
   currentPage: -1,
   currentPageNews: [],
   pagesLeft: null
-} as PaginationState
+} as PaginationStateInterface
 
 export const paginationSlice = createSlice({
   name: 'pagination',

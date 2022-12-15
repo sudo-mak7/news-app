@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { getItemFromApiWithUrlById } from '@api/url'
 import { NewsInterface } from '@common-types/newsInterface'
+import { NewsStateInterface } from '@redux/types'
 
 export const fetchNewsByIds = createAsyncThunk(
   'news/fetchNewsByIds',
@@ -24,17 +25,11 @@ export const fetchNewsByIds = createAsyncThunk(
   }
 )
 
-interface NewsState {
-  news: NewsInterface[],
-  loading: boolean,
-  error: any
-}
-
 const initialState = {
   news: [],
   loading: false,
   error: null
-} as NewsState
+} as NewsStateInterface
 
 export const newsSlice = createSlice({
   name: 'news',

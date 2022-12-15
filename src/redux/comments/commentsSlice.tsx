@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { getItemFromApiWithUrlById } from '@api/url'
 import { CommentsInterface } from '@common-types/commentsInterface'
+import { CommentsStateInterface } from '@redux/types'
 
 export const fetchComments = createAsyncThunk(
   'comments/fetchComments',
@@ -26,17 +27,11 @@ export const fetchComments = createAsyncThunk(
   }
 )
 
-interface CommentsState {
-  comments: CommentsInterface[],
-  loading: boolean,
-  error: any
-}
-
 const initialState = {
   comments: [],
   loading: false,
   error: null
-} as CommentsState
+} as CommentsStateInterface
 
 export const commentsSlice = createSlice({
   name: 'comments',
