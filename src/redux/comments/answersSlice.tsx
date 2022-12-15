@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { getItemFromApiWithUrlById } from '@api/url'
 import { fetchAnswersInterface } from '@redux/types'
@@ -17,7 +16,7 @@ export const fetchAnswers = createAsyncThunk(
 
     if (!response.ok) {
       setError(response)
-      throw new Error('Server Error!')
+      console.warn('Server Error!')
     } else {
       const comments = await response.json()
       const ids = comments?.kids
@@ -29,7 +28,7 @@ export const fetchAnswers = createAsyncThunk(
 
         if (!response.ok) {
           setError(response)
-          throw new Error('Server Error!')
+          console.warn('Server Error!')
         } else {
           const currentAnswer = await response.json()
           answers.push(currentAnswer)

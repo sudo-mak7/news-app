@@ -11,7 +11,7 @@ export const fetchNewsIds = createAsyncThunk(
       const response = await fetch(newsApiUrl)
 
       if (!response.ok) {
-        throw new Error('Server Error!')
+        console.warn('Server Error!')
       } else {
         const loadedNewsIds = await response.json()
         const paginatedNewsIds = getPaginatedNewsIds(loadedNewsIds)

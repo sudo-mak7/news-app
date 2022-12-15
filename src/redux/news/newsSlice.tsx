@@ -13,7 +13,7 @@ export const fetchNewsByIds = createAsyncThunk(
         const response = await fetch(getItemFromApiWithUrlById(ids[i]))
 
         if (!response.ok) {
-          throw new Error('Server Error!')
+          console.warn('Server Error!')
         } else {
           news.push(await response.json())
         }

@@ -11,7 +11,7 @@ export const fetchCurrentNewsById = createAsyncThunk(
       const response = await fetch(getItemFromApiWithUrlById(id))
 
       if (!response.ok) {
-        throw new Error('Server Error!')
+        console.warn('Server Error!')
       } else {
         const currNews = await response.json()
         dispatch(currentNews(currNews))
