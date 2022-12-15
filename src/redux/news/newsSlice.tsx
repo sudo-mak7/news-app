@@ -17,7 +17,7 @@ export const fetchNewsByIds = createAsyncThunk(
         } else {
           news.push(await response.json())
         }
-      } catch (error) {
+      } catch (error: any) {
         return rejectWithValue(error.message)
       }
     }

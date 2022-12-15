@@ -17,7 +17,7 @@ export const fetchCurrentNewsById = createAsyncThunk(
         dispatch(currentNews(currNews))
         dispatch(fetchComments(currNews.kids))
       }
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.message)
     }
   }

@@ -13,12 +13,12 @@ export const fetchNewsIds = createAsyncThunk(
       if (!response.ok) {
         console.warn('Server Error!')
       } else {
-        const loadedNewsIds = await response.json()
-        const paginatedNewsIds = getPaginatedNewsIds(loadedNewsIds)
+        const loadedNewsIds: number[] = await response.json()
+        const paginatedNewsIds: [number][] = getPaginatedNewsIds(loadedNewsIds)
         dispatch(setNewsIds(paginatedNewsIds))
         dispatch(fetchNewsByIds(paginatedNewsIds[0]))
       }
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.message)
     }
   }

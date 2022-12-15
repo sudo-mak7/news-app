@@ -50,6 +50,14 @@ const MainPage = (): JSX.Element => {
     if (!newsIds.length) {
       dispatch(fetchNewsIds())
     }
+
+    if (!newsIdsIsLoading && !newsIsLoading) {
+      return () => {
+        dispatch(clearPaginationState())
+        dispatch(clearNews())
+        dispatch(clearNewsIds())
+      }
+    }
   }, [])
 
   useEffect(() => {
@@ -65,17 +73,6 @@ const MainPage = (): JSX.Element => {
       dispatch(setPagesLeft(pagesLeft - 1))
     }
   }, [news])
-
-  useEffect(() => {
-    if (!newsIdsIsLoading && !newsIsLoading) {
-      return () => {
-
-        dispatch(clearPaginationState())
-        dispatch(clearNews())
-        dispatch(clearNewsIds())
-      }
-    }
-  }, [])
 
   useEffect(() => {
     if (currentPage !== 0 && !newsIdsIsLoading && currentPageNews.length) {

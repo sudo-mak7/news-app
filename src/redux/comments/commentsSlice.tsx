@@ -18,7 +18,7 @@ export const fetchComments = createAsyncThunk(
           const commentsLoaded = await response.json()
           comments.push(commentsLoaded)
         }
-      } catch (error) {
+      } catch (error: any) {
         return rejectWithValue(error.message)
       }
     }
