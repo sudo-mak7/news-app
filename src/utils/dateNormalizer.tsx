@@ -1,4 +1,4 @@
-export const dateNormalizer = (time) => {
+export const dateNormalizer = (time: number) => {
   const getDate = new Date(time * 1000).toLocaleDateString() + ' ('
   const getHours = new Date(time * 1000).getHours() + ':'
   const getMinutes = new Date(time * 1000).getMinutes() < 10

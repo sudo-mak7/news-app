@@ -1,4 +1,5 @@
-import React, {useEffect} from 'react'
+import * as React from 'react'
+import { useEffect } from 'react'
 import {
   Button,
   Container,
@@ -8,7 +9,8 @@ import {
   Loader,
   Segment
 } from 'semantic-ui-react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useAppDispatch } from '@redux/reduxHooks'
+import { useAppSelector } from '@redux/reduxHooks'
 import { fetchCurrentNewsById } from '@redux/news/currentNewsSlice'
 import { fetchComments } from '@redux/comments/commentsSlice'
 import {
@@ -21,22 +23,22 @@ import { windowScrollUp } from '@utils/windowScrollUp'
 import { dateNormalizer } from '@utils/dateNormalizer'
 import CommentsSectionComponent from '@components/comments/CommentsSectionComponent'
 
-const NewsPageComponent = () => {
-  const newsId = useSelector(getNewsByIdSelector)
-  const news = useSelector(getCurrentNewsSelector)
-  const isLoading = useSelector(getCurrentNewsLoaderSelector)
-  const error = useSelector(getCurrentNewsErrorSelector)
+const NewsPageComponent = (): JSX.Element => {
+  const newsId = useAppSelector(getNewsByIdSelector)
+  const news = useAppSelector(getCurrentNewsSelector)
+  const isLoading = useAppSelector(getCurrentNewsLoaderSelector)
+  const error = useAppSelector(getCurrentNewsErrorSelector)
 
   const errorMessage = 'Error loading current news :('
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
-  useEffect(() => {
+  useEffect((): void => {
     windowScrollUp()
     dispatch(fetchCurrentNewsById(newsId))
   }, [])
 
-  const updateComments = () => {
+  const updateComments = (): void => {
     if (news.hasOwnProperty('kids')) {
       dispatch(fetchComments(news.kids))
     }
@@ -91,7 +93,7 @@ const NewsPageComponent = () => {
                       size='mini'
                       floated='right'
                       color='blue'
-                      onClick={ () => { updateComments() } }
+                      onClick={ (): void => { updateComments() } }
                     >
                       Update comments
                     </Button>

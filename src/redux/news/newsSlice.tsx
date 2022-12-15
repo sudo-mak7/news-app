@@ -1,9 +1,10 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { getItemFromApiWithUrlById } from '@api/url'
+import { NewsInterface } from '@common-types/newsInterface'
 
 export const fetchNewsByIds = createAsyncThunk(
   'news/fetchNewsByIds',
-  async (ids, { rejectWithValue , dispatch }) => {
+  async (ids: number[], { rejectWithValue , dispatch }) => {
     const news = []
 
     for (let i = 0; i < ids.length; i++) {
@@ -23,15 +24,23 @@ export const fetchNewsByIds = createAsyncThunk(
   }
 )
 
+interface NewsState {
+  news: NewsInterface[],
+  loading: boolean,
+  error: any
+}
+
+const initialState = {
+  news: [],
+  loading: false,
+  error: null
+} as NewsState
+
 export const newsSlice = createSlice({
   name: 'news',
-  initialState: {
-    news: [],
-    loading: false,
-    error: null
-  },
+  initialState,
   reducers: {
-    setNews: (state, action) => {
+    setNews: (state, action: PayloadAction<NewsInterface[]>) => {
       state.news = action.payload
     },
     clearNews: (state) => {
@@ -46,7 +55,7 @@ export const newsSlice = createSlice({
     .addCase(fetchNewsByIds.fulfilled, (state) => {
       state.loading = false
     })
-    .addCase(fetchNewsByIds.rejected, (state, action) => {
+    .addCase(fetchNewsByIds.rejected, (state, action: PayloadAction<any>) => {
       state.loading = false
       state.error = action.payload
     })

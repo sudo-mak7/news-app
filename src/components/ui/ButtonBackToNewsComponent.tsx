@@ -1,8 +1,8 @@
-import React from 'react'
+import * as React from 'react'
 import { Button, Icon } from 'semantic-ui-react'
 import { useNavigate  } from 'react-router-dom'
 
-const ButtonBackToNewsComponent = () => {
+const ButtonBackToNewsComponent = (): JSX.Element => {
   const navigate = useNavigate()
 
   return (
@@ -16,7 +16,7 @@ const ButtonBackToNewsComponent = () => {
         top: '0.25em',
         left: '0.25em'
       }}
-      onClick={ () => { navigate(-1) } }
+      onClick={ (): void => { navigate(-1) } }
     >
       <Icon name='arrow left'></Icon>
     </Button>
