@@ -1,3 +1,4 @@
+// прочитай про Partial<Type>
 export interface CommentsInterface {
   by?: string,
   id?: number,
