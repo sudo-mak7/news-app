@@ -38,7 +38,8 @@ const MainPage = (): JSX.Element => {
   const news = useAppSelector(getNewsSelector)
   const newsIsLoading = useAppSelector(getNewsLoaderSelector)
   const newsLoadingError = useAppSelector(getNewsErrorSelector)
-
+  
+  //вынеси из компонента, обычно статичные переменные константы называеют в UPPER_CASE
   const errorMessage = 'Error loading news :('
 
   const currentPage = useAppSelector(getCurrentPageNumberSelector)
@@ -75,23 +76,27 @@ const MainPage = (): JSX.Element => {
   }, [news])
 
   useEffect(() => {
+    //такое длинное условие лучше убрать в переменную с осмысленным названием
     if (currentPage !== 0 && !newsIdsIsLoading && currentPageNews.length) {
        dispatch(fetchNewsByIds(newsIds[currentPage]))
     }
   }, [currentPage])
 
+  
   const lazyLoadingCallback = () => {
     dispatch(setCurrentPageNumber())
   }
-
+  // для чего сделано? 
   const target = document.querySelector('#loader')
 
   useEffect(() => {
+    //длинное условие унеси в переменную и дай осмысленное название
     if (!newsIdsIsLoading && !newsIsLoading && target) {
       lazyLoading(lazyLoadingCallback, target)
     }
   }, [target])
-
+  
+  // лучше изменить ифы, чем так выносить
   const loaderRender = <Loader active/>
 
   const errorRender =
@@ -105,11 +110,11 @@ const MainPage = (): JSX.Element => {
       { ...n }
     />
   )
-
+// в ретурне слишком много нечинаемых условией. Унеси в стейтмашину либо разбей на компоненты 
   return (
     <main style={{ overflow: 'hidden' }}>
       <ButtonUpdateNewsComponent/>
-
+     
       <Container text style={{ marginTop: '5em' }}>
         { newsIdsLoadingError
             ? errorRender
