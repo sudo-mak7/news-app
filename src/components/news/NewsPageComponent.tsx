@@ -28,7 +28,7 @@ const NewsPageComponent = (): JSX.Element => {
   const news = useAppSelector(getCurrentNewsSelector)
   const isLoading = useAppSelector(getCurrentNewsLoaderSelector)
   const error = useAppSelector(getCurrentNewsErrorSelector)
-
+   //убери вне компонента
   const errorMessage = 'Error loading current news :('
 
   const dispatch = useAppDispatch()
@@ -43,13 +43,13 @@ const NewsPageComponent = (): JSX.Element => {
       dispatch(fetchComments(news.kids))
     }
   }
-
+  //для чего ? вынеси все в функцию
   let date = ''
 
   if (typeof news.time === 'number') {
     date = dateNormalizer(news.time)
   }
-
+  // очень много тернарников , разбей на под компоненты
   return (
     <Container text style={{ marginTop: '5em' }}>
       { isLoading
