@@ -18,23 +18,24 @@ const CommentComponent = (
   const [ answers, setAnswersState ] = useState<CommentsInterface[]>([])
   const [ isLoading, setIsLoading ] = useState<boolean>(false)
   const [ error, setError ] = useState<any>(commentsLoadingError)
-
+  // вынеси
   const errorMessage = 'Error loading comments :('
 
   const dispatch = useAppDispatch()
 
   const handleCollapse = (e: React.MouseEvent<HTMLButtonElement>): void => {
+    // setIsCollapsed(prev=>!prev)
     isCollapsed === true
       ? setIsCollapsed(false)
       : setIsCollapsed(true)
-
+     // лучше явноние приведение через Number()
     const id = +e.currentTarget.id
 
     if (isCollapsed) {
       dispatch(fetchAnswers({ id, setAnswersState, setIsLoading, setError }))
     }
   }
-
+  //тераниркики 
   return (
     error
       ? <Header as='h4' textAlign='center'>{ errorMessage }</Header>
