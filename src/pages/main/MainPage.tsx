@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { Container, Header, Loader } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 import { useAppDispatch, useAppSelector } from '@redux/reduxHooks'
@@ -44,12 +44,12 @@ const MainPage = (): JSX.Element => {
   const currentPageNews = useAppSelector(getCurrentPageNewsSelector)
   const pagesLeft = useAppSelector(getPagesLeftSelector)
 
-  const target = document.querySelector('#loader')
+  const loaderRef = useRef<HTMLDivElement>(null)
 
   const conditionToFetchNewsByIds =
     currentPage !== 0 && !newsIdsIsLoading && currentPageNews.length
 
-  const conditionToDoLazyLoading = !newsIdsIsLoading && !newsIsLoading && target
+  const conditionToDoLazyLoading = !newsIdsIsLoading && !newsIsLoading && loaderRef.current
 
   const conditionToNewsRender = ( newsIdsIsLoading || newsIsLoading ) && !currentPageNews.length
 
@@ -94,9 +94,9 @@ const MainPage = (): JSX.Element => {
 
   useEffect(() => {
     if (conditionToDoLazyLoading) {
-      lazyLoading(lazyLoadingCallback, target)
+      lazyLoading(lazyLoadingCallback, loaderRef.current)
     }
-  }, [target])
+  }, [loaderRef])
 
   const errorRender =
     newsLoadingError
@@ -130,7 +130,7 @@ const MainPage = (): JSX.Element => {
 
         { !newsIdsIsLoading && pagesLeft > 0
             ? <div
-                id='loader'
+                ref={ loaderRef }
                 style={{ height: '50px' }}
               >
                 <Loader active inline='centered' />
