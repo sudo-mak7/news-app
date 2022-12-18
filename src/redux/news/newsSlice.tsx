@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { getItemFromApiWithUrlById } from '@api/url'
-import { NewsInterface } from '@common-types/newsInterface'
+import { NewsInterface } from '@common/types/newsInterface'
 import { NewsStateInterface } from '@redux/types'
 
 export const fetchNewsByIds = createAsyncThunk(

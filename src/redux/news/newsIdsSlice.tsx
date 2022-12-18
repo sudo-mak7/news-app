@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { newsApiUrl } from '@api/url'
+import { paths } from '@api/url'
 import { getPaginatedNewsIds } from '@utils/getPaginatedNewsIds'
 import { fetchNewsByIds } from '@redux/news/newsSlice'
 import { NewsIdsStateInterface } from '@redux/types'
@@ -8,7 +8,7 @@ export const fetchNewsIds = createAsyncThunk(
   'newsIds/fetchNewsIds',
   async (_, { rejectWithValue , dispatch }) => {
     try {
-      const response = await fetch(newsApiUrl)
+      const response = await fetch(paths.newsApiUrl())
 
       if (!response.ok) {
         console.warn('Server Error!')

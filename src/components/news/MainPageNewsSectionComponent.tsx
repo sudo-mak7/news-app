@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom'
 import { useAppDispatch } from '@redux/reduxHooks'
 import { setCurrentNewsId } from '@redux/news/newsByIdSlice'
 import { dateNormalizer } from '@utils/dateNormalizer'
-import { NewsInterface } from '@common-types/newsInterface'
+import { NewsInterface } from '@common/types/newsInterface'
 
 const MainPageNewsSectionComponent = ({
                                         title,

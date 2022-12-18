@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { CommentsInterface } from '@common-types/commentsInterface'
-import { NewsInterface } from '@common-types/newsInterface'
+import { CommentsInterface } from '@common/types/commentsInterface'
+import { NewsInterface } from '@common/types/newsInterface'
 
 export interface fetchAnswersInterface {
   id: number,

@@ -6,7 +6,7 @@ import {
   getCommentsSelector
 } from '@redux/selectors'
 import CommentComponent from '@components/comments/CommentComponent'
-import { CommentsInterface } from '@common-types/commentsInterface'
+import { CommentsInterface } from '@common/types/commentsInterface'
 
 const CommentsSectionComponent = (): JSX.Element => {
   const isLoading = useAppSelector(getCommentsLoaderSelector)

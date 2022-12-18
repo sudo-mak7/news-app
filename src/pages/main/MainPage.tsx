@@ -26,7 +26,8 @@ import ButtonUpdateNewsComponent from '@components/ui/ButtonUpdateNewsComponent'
 import MainPageNewsSectionComponent from '@components/news/MainPageNewsSectionComponent'
 import { lazyLoading } from '@utils/lazyLoading'
 import { windowScrollUp } from '@utils/windowScrollUp'
-import { NewsInterface } from '@common-types/newsInterface'
+import { NewsInterface } from '@common/types/newsInterface'
+import { ERROR_LOADING_NEWS_MESSAGE } from '@common/messages/errors'
 
 const MainPage = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -39,11 +40,18 @@ const MainPage = (): JSX.Element => {
   const newsIsLoading = useAppSelector(getNewsLoaderSelector)
   const newsLoadingError = useAppSelector(getNewsErrorSelector)
 
-  const errorMessage = 'Error loading news :('
-
   const currentPage = useAppSelector(getCurrentPageNumberSelector)
   const currentPageNews = useAppSelector(getCurrentPageNewsSelector)
   const pagesLeft = useAppSelector(getPagesLeftSelector)
+
+  const target = document.querySelector('#loader')
+
+  const conditionToFetchNewsByIds =
+    currentPage !== 0 && !newsIdsIsLoading && currentPageNews.length
+
+  const conditionToDoLazyLoading = !newsIdsIsLoading && !newsIsLoading && target
+
+  const conditionToNewsRender = ( newsIdsIsLoading || newsIsLoading ) && !currentPageNews.length
 
   useEffect(() => {
     windowScrollUp()
@@ -75,36 +83,40 @@ const MainPage = (): JSX.Element => {
   }, [news])
 
   useEffect(() => {
-    if (currentPage !== 0 && !newsIdsIsLoading && currentPageNews.length) {
+    if (conditionToFetchNewsByIds) {
        dispatch(fetchNewsByIds(newsIds[currentPage]))
     }
   }, [currentPage])
-
   const lazyLoadingCallback = () => {
     dispatch(setCurrentPageNumber())
+
   }
 
-  const target = document.querySelector('#loader')
-
   useEffect(() => {
-    if (!newsIdsIsLoading && !newsIsLoading && target) {
+    if (conditionToDoLazyLoading) {
       lazyLoading(lazyLoadingCallback, target)
     }
   }, [target])
 
-  const loaderRender = <Loader active/>
-
   const errorRender =
-    <Header as='h2' color='blue' textAlign='center'>
-      { errorMessage }
-    </Header>
+    newsLoadingError
+      ? <Header
+          as='h2'
+          color='blue'
+          textAlign='center'>
+          { ERROR_LOADING_NEWS_MESSAGE }
+        </Header>
+      : ''
 
-  const newsRender = currentPageNews.map((n: NewsInterface) =>
-    <MainPageNewsSectionComponent
-      key={ n.id }
-      { ...n }
-    />
-  )
+  const newsRender =
+    conditionToNewsRender
+        ? <Loader active/>
+        : currentPageNews.map((n: NewsInterface) =>
+            <MainPageNewsSectionComponent
+              key={ n.id }
+              { ...n }
+            />
+    )
 
   return (
     <main style={{ overflow: 'hidden' }}>
@@ -113,19 +125,17 @@ const MainPage = (): JSX.Element => {
       <Container text style={{ marginTop: '5em' }}>
         { newsIdsLoadingError
             ? errorRender
-            : ( newsIdsIsLoading || newsIsLoading ) && !currentPageNews.length
-                ? loaderRender
-                : newsRender
+            : newsRender
         }
 
-        { !newsIdsIsLoading
-            && pagesLeft > 0
-                ? <div id='loader' style={{ height: '50px' }}>
-                    <Loader active inline='centered' />
-                  </div>
-                : newsLoadingError
-                   ? errorRender
-                   : ''
+        { !newsIdsIsLoading && pagesLeft > 0
+            ? <div
+                id='loader'
+                style={{ height: '50px' }}
+              >
+                <Loader active inline='centered' />
+              </div>
+            : errorRender
         }
       </Container>
     </main>

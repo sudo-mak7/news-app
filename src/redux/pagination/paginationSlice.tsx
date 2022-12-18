@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { NewsInterface } from '@common-types/newsInterface'
+import { NewsInterface } from '@common/types/newsInterface'
 import { PaginationStateInterface } from '@redux/types'
 
 const initialState = {
