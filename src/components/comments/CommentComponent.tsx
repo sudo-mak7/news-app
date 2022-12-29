@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { useState } from 'react'
+import DOMPurify from 'dompurify'
 import { Label, Comment, Header } from 'semantic-ui-react'
 import { useAppDispatch } from '@redux/reduxHooks'
 import { useAppSelector } from '@redux/reduxHooks'
@@ -31,6 +32,10 @@ const CommentComponent = (
       dispatch(fetchAnswers({ id, setAnswersState, setIsLoading, setError }))
     }
   }
+
+  const sanitizedHTMLText = () => ({
+    __html: DOMPurify.sanitize(text)
+  })
 
   const errorRender =
     <Header
@@ -67,7 +72,7 @@ const CommentComponent = (
       : <Comment.Content>
           <Comment.Author as='a'>{ by }</Comment.Author>
           <Comment.Text
-            dangerouslySetInnerHTML={{ __html: text }}
+            dangerouslySetInnerHTML={ sanitizedHTMLText() }
           />
           { commentActionsRender }
         </Comment.Content>
