@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { Container, Header, Loader } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 import { useAppDispatch, useAppSelector } from '@redux/reduxHooks'
@@ -24,10 +24,10 @@ import {
 } from '@redux/pagination/paginationSlice'
 import ButtonUpdateNewsComponent from '@components/ui/ButtonUpdateNewsComponent'
 import MainPageNewsSectionComponent from '@components/news/MainPageNewsSectionComponent'
-import { lazyLoading } from '@utils/lazyLoading'
 import { windowScrollUp } from '@utils/windowScrollUp'
 import { NewsInterface } from '@common/types/newsInterface'
 import { ERROR_LOADING_NEWS_MESSAGE } from '@common/messages/errors'
+import { useInView } from 'react-intersection-observer'
 
 const MainPage = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -44,14 +44,21 @@ const MainPage = (): JSX.Element => {
   const currentPageNews = useAppSelector(getCurrentPageNewsSelector)
   const pagesLeft = useAppSelector(getPagesLeftSelector)
 
-  const loaderRef = useRef<HTMLDivElement>(null)
+  const { ref, inView } = useInView({
+    threshold: 0
+  })
 
-  const conditionToFetchNewsByIds =
-    currentPage !== 0 && !newsIdsIsLoading && currentPageNews.length
+  const conditionToFetchNewsByIds = () => {
+    return currentPage !== 0 && !newsIdsIsLoading && currentPageNews.length
+  }
 
-  const conditionToDoLazyLoading = !newsIdsIsLoading && !newsIsLoading && loaderRef.current
+  const conditionToDoLazyLoading = () => {
+    return !newsIdsIsLoading && !newsIsLoading && inView
+  }
 
-  const conditionToNewsRender = ( newsIdsIsLoading || newsIsLoading ) && !currentPageNews.length
+  const conditionToNewsRender = () => {
+    return  ( newsIdsIsLoading || newsIsLoading ) && !currentPageNews.length
+  }
 
   useEffect(() => {
     windowScrollUp()
@@ -83,20 +90,16 @@ const MainPage = (): JSX.Element => {
   }, [news])
 
   useEffect(() => {
-    if (conditionToFetchNewsByIds) {
+    if (conditionToFetchNewsByIds()) {
        dispatch(fetchNewsByIds(newsIds[currentPage]))
     }
   }, [currentPage])
-  const lazyLoadingCallback = () => {
-    dispatch(setCurrentPageNumber())
-
-  }
 
   useEffect(() => {
-    if (conditionToDoLazyLoading) {
-      lazyLoading(lazyLoadingCallback, loaderRef.current)
+    if (conditionToDoLazyLoading()) {
+      dispatch(setCurrentPageNumber())
     }
-  }, [loaderRef])
+  }, [inView])
 
   const errorRender =
     newsLoadingError
@@ -109,7 +112,7 @@ const MainPage = (): JSX.Element => {
       : ''
 
   const newsRender =
-    conditionToNewsRender
+    conditionToNewsRender()
         ? <Loader active/>
         : currentPageNews.map((n: NewsInterface) =>
             <MainPageNewsSectionComponent
@@ -130,7 +133,7 @@ const MainPage = (): JSX.Element => {
 
         { !newsIdsIsLoading && pagesLeft > 0
             ? <div
-                ref={ loaderRef }
+                ref={ ref }
                 style={{ height: '50px' }}
               >
                 <Loader active inline='centered' />

@@ -3,7 +3,7 @@ import { NewsInterface } from '@common/types/newsInterface'
 import { PaginationStateInterface } from '@redux/types'
 
 const initialState = {
-  currentPage: -1,
+  currentPage: 0,
   currentPageNews: [],
   pagesLeft: null
 } as PaginationStateInterface
@@ -28,7 +28,7 @@ export const paginationSlice = createSlice({
       state.pagesLeft = action.payload
     },
     clearPaginationState: (state) => {
-      state.currentPage = -1
+      state.currentPage = 0
       state.currentPageNews = []
       state.pagesLeft = null
     }
