@@ -12,7 +12,7 @@ const ButtonBackToNewsComponent = (): JSX.Element => {
       color='blue'
       style={{
         zIndex: '999',
-        position: 'absolute',
+        position: 'fixed',
         top: '0.25em',
         left: '0.25em'
       }}
