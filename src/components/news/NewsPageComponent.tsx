@@ -30,7 +30,7 @@ const NewsPageComponent = (): JSX.Element => {
   const isLoading = useAppSelector(getCurrentNewsLoaderSelector)
   const error = useAppSelector(getCurrentNewsErrorSelector)
 
-  const [ date, setDate ] = useState<string | null>(null)
+  const [ date, setDate ] = useState<number | null>(null)
 
   const dispatch = useAppDispatch()
 
@@ -46,7 +46,8 @@ const NewsPageComponent = (): JSX.Element => {
   }
 
   useEffect((): void => {
-    setDate(dateNormalizer(news.time))
+    const date = Number(dateNormalizer(news.time))
+    setDate(date)
   }, [news])
 
   const errorRender =
@@ -78,7 +79,7 @@ const NewsPageComponent = (): JSX.Element => {
   const newsRender =
     error
       ? errorRender
-      : <Segment.Group>
+      : <Segment.Group data-testid='news'>
           <Segment attached='top' color='blue'>
             <Header as='h2' color='blue'>
               { news.title || 'No title' }
@@ -124,7 +125,10 @@ const NewsPageComponent = (): JSX.Element => {
   return (
     <Container text style={{ marginTop: '5em' }}>
       { isLoading
-          ? <Loader active/>
+          ? <Loader
+            data-testid='loader'
+            active
+          />
           : newsRender
       }
     </Container>

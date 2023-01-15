@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AnswerSectionComponent test AnswerSectionComponent should to match snapshot 1`] = `
+<Provider
+  store={
+    Object {
+      "@@observable": [Function],
+      "dispatch": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <AnswerSectionComponent
+    answers={
+      Array [
+        Object {
+          "by": "author",
+          "id": 2921983,
+          "kids": Array [
+            2922097,
+            2922429,
+            2924562,
+            2922709,
+            2922573,
+            2922140,
+            2922141,
+          ],
+          "parent": 2921506,
+          "text": "Some text",
+          "time": 1314211127,
+          "type": "comment",
+        },
+      ]
+    }
+    isCollapsed={false}
+    isLoading={false}
+  />
+</Provider>
+`;

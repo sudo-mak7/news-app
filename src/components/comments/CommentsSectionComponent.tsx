@@ -21,10 +21,13 @@ const CommentsSectionComponent = (): JSX.Element => {
   )
 
   return (
-    <Comment.Group>
+    <Comment.Group data-testid='comment'>
       { isLoading
           ? <div style={{ height: '75px' }}>
-              <Loader active/>
+              <Loader
+                data-testid='loader'
+                active
+              />
             </div>
           : commentsRender
       }

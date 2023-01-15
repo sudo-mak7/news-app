@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CommentComponent test CommentComponent should to match snapshot 1`] = `
+<Provider
+  store={
+    Object {
+      "@@observable": [Function],
+      "dispatch": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <CommentComponent
+    by="author"
+    dead={false}
+    deleted={false}
+    id={2921983}
+    kids={Array []}
+    text="Some text"
+  />
+</Provider>
+`;

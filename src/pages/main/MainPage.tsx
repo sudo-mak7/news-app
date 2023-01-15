@@ -48,17 +48,14 @@ const MainPage = (): JSX.Element => {
     threshold: 0
   })
 
-  const conditionToFetchNewsByIds = () => {
-    return currentPage !== 0 && !newsIdsIsLoading && currentPageNews.length
-  }
+  const conditionToFetchNewsByIds = (): boolean | number =>
+    currentPage !== 0 && !newsIdsIsLoading && currentPageNews.length
 
-  const conditionToDoLazyLoading = () => {
-    return !newsIdsIsLoading && !newsIsLoading && inView
-  }
+  const conditionToDoLazyLoading = (): boolean =>
+    !newsIdsIsLoading && !newsIsLoading && inView
 
-  const conditionToNewsRender = () => {
-    return  ( newsIdsIsLoading || newsIsLoading ) && !currentPageNews.length
-  }
+  const conditionToNewsRender = (): boolean =>
+    ( newsIdsIsLoading || newsIsLoading ) && !currentPageNews.length
 
   useEffect(() => {
     windowScrollUp()
@@ -113,7 +110,10 @@ const MainPage = (): JSX.Element => {
 
   const newsRender =
     conditionToNewsRender()
-        ? <Loader active/>
+        ? <Loader
+            data-testid='loader'
+            active
+          />
         : currentPageNews.map((n: NewsInterface) =>
             <MainPageNewsSectionComponent
               key={ n.id }
@@ -125,7 +125,11 @@ const MainPage = (): JSX.Element => {
     <main style={{ overflow: 'hidden' }}>
       <ButtonUpdateNewsComponent/>
 
-      <Container text style={{ marginTop: '5em' }}>
+      <Container
+        data-testid='container'
+        text
+        style={{ marginTop: '5em' }}
+      >
         { newsIdsLoadingError
             ? errorRender
             : newsRender
@@ -136,7 +140,11 @@ const MainPage = (): JSX.Element => {
                 ref={ ref }
                 style={{ height: '50px' }}
               >
-                <Loader active inline='centered' />
+                <Loader
+                  data-testid='loader'
+                  active
+                  inline='centered'
+                />
               </div>
             : errorRender
         }

@@ -31,6 +31,7 @@ const MainPageNewsSectionComponent = ({
 
   return (
     <Segment.Group
+      data-testid='news'
       id={ id }
       onClick={ (e): void => getNewsId(e) }
     >

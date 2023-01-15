@@ -3,6 +3,7 @@ import { getItemFromApiWithUrlById } from '@api/url'
 import { fetchComments } from '@redux/comments/commentsSlice'
 import { NewsInterface } from '@common/types/newsInterface'
 import { CurrentNewsStateInterface } from '@redux/types'
+import {ERROR_LOADING_CURRENT_NEWS_MESSAGE} from "@common/messages/errors";
 
 export const fetchCurrentNewsById = createAsyncThunk(
   'currentNews/fetchCurrentNewsById',
@@ -11,7 +12,8 @@ export const fetchCurrentNewsById = createAsyncThunk(
       const response = await fetch(getItemFromApiWithUrlById(id))
 
       if (!response.ok) {
-        console.warn('Server Error!')
+        console.warn(ERROR_LOADING_CURRENT_NEWS_MESSAGE)
+        throw new Error(ERROR_LOADING_CURRENT_NEWS_MESSAGE)
       } else {
         const currNews = await response.json()
         dispatch(currentNews(currNews))

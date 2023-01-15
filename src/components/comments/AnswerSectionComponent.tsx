@@ -32,9 +32,13 @@ const AnswerSectionComponent = (
   )
 
   const commentGroupRender =
-    <Comment.Group>
+    <Comment.Group data-testid='answers'>
       { isLoading
-          ? <Loader active inline='centered'/>
+          ? <Loader
+            data-testid='loader'
+            active
+            inline='centered'
+          />
           : commentsRender
       }
     </Comment.Group>

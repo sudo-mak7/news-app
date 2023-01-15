@@ -24,7 +24,7 @@ const CommentComponent = (
   const dispatch = useAppDispatch()
 
   const handleCollapse = (e: React.MouseEvent<HTMLButtonElement>): void => {
-    setIsCollapsed(prev=>!prev)
+    setIsCollapsed(prev => !prev)
 
     const id = Number(e.currentTarget.id)
 
@@ -48,6 +48,7 @@ const CommentComponent = (
     <Comment.Actions>
       { kids
           ? <Label
+              data-testid='button-label'
               size='mini'
               style={{ cursor: 'pointer' }}
               id={ id }
@@ -87,7 +88,10 @@ const CommentComponent = (
       : ''
 
   const commentRender =
-    <Comment id={ id }>
+    <Comment
+      data-testid='comment'
+      id={ id }
+    >
       <Comment.Avatar
         as='a'
         src={ paths.avatarUrl() }

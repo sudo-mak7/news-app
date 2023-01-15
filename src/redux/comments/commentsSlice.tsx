@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { getItemFromApiWithUrlById } from '@api/url'
 import { CommentsInterface } from '@common/types/commentsInterface'
 import { CommentsStateInterface } from '@redux/types'
+import {ERROR_LOADING_COMMENTS_MESSAGE} from "@common/messages/errors";
 
 export const fetchComments = createAsyncThunk(
   'comments/fetchComments',
@@ -13,7 +14,8 @@ export const fetchComments = createAsyncThunk(
         const response = await fetch(getItemFromApiWithUrlById(ids[i]))
 
         if (!response.ok) {
-          console.warn('Server Error!')
+          console.warn(ERROR_LOADING_COMMENTS_MESSAGE)
+          throw new Error(ERROR_LOADING_COMMENTS_MESSAGE)
         } else {
           const commentsLoaded = await response.json()
           comments.push(commentsLoaded)

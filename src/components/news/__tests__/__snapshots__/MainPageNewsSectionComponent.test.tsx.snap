@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainPageNewsSectionComponent test MainPageNewsSectionComponent should to match snapshot 1`] = `
+<Provider
+  store={
+    Object {
+      "@@observable": [Function],
+      "dispatch": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <BrowserRouter>
+    <MainPageNewsSectionComponent
+      by="author"
+      id={8863}
+      score={111}
+      time={1175714200}
+      title="News title"
+    />
+  </BrowserRouter>
+</Provider>
+`;
+
+exports[`MainPageNewsSectionComponent test renders MainPageNewsSectionComponent with data 1`] = `
+<Provider
+  store={
+    Object {
+      "@@observable": [Function],
+      "dispatch": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <BrowserRouter>
+    <MainPageNewsSectionComponent
+      by="author"
+      id={8863}
+      score={111}
+      time={1175714200}
+      title="News title"
+    />
+  </BrowserRouter>
+</Provider>
+`;
+
+exports[`MainPageNewsSectionComponent test renders MainPageNewsSectionComponent with no data 1`] = `
+<Provider
+  store={
+    Object {
+      "@@observable": [Function],
+      "dispatch": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <BrowserRouter>
+    <MainPageNewsSectionComponent
+      by={null}
+      id={null}
+      score={null}
+      time={null}
+      title={null}
+    />
+  </BrowserRouter>
+</Provider>
+`;

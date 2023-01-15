@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CurrentNewsPage test CurrentNewsPage should to match snapshot 1`] = `
+<Provider
+  store={
+    Object {
+      "@@observable": [Function],
+      "dispatch": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <BrowserRouter>
+    <CurrentNewsPage />
+  </BrowserRouter>
+</Provider>
+`;
+
+exports[`CurrentNewsPage test renders CurrentNewsPage ButtonBackToNewsComponent 1`] = `
+<Provider
+  store={
+    Object {
+      "@@observable": [Function],
+      "dispatch": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <BrowserRouter>
+    <CurrentNewsPage />
+  </BrowserRouter>
+</Provider>
+`;
+
+exports[`CurrentNewsPage test renders CurrentNewsPage news block 1`] = `
+<Provider
+  store={
+    Object {
+      "@@observable": [Function],
+      "dispatch": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <BrowserRouter>
+    <CurrentNewsPage />
+  </BrowserRouter>
+</Provider>
+`;

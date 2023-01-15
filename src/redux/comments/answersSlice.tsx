@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { getItemFromApiWithUrlById } from '@api/url'
 import { fetchAnswersInterface } from '@redux/types'
+import { ERROR_LOADING_ANSWERS_MESSAGE } from '@common/messages/errors'
 
 export const fetchAnswers = createAsyncThunk(
   'comments/fetchAnswers',
@@ -16,7 +17,8 @@ export const fetchAnswers = createAsyncThunk(
 
     if (!response.ok) {
       setError(response)
-      console.warn('Server Error!')
+      console.warn(ERROR_LOADING_ANSWERS_MESSAGE)
+      throw new Error(ERROR_LOADING_ANSWERS_MESSAGE)
     } else {
       const comments = await response.json()
       const ids = comments?.kids
@@ -28,7 +30,8 @@ export const fetchAnswers = createAsyncThunk(
 
         if (!response.ok) {
           setError(response)
-          console.warn('Server Error!')
+          console.warn(ERROR_LOADING_ANSWERS_MESSAGE)
+          throw new Error(ERROR_LOADING_ANSWERS_MESSAGE)
         } else {
           const currentAnswer = await response.json()
           answers.push(currentAnswer)
@@ -42,9 +45,9 @@ export const fetchAnswers = createAsyncThunk(
 
 export const answersSlice = createSlice({
   name: 'answers',
-  initialState: undefined,
-  reducers: undefined,
-  extraReducers: undefined
+  initialState: {},
+  reducers: {},
+  extraReducers: {}
 })
 
 export default answersSlice.reducer

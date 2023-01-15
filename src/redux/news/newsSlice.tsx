@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { getItemFromApiWithUrlById } from '@api/url'
 import { NewsInterface } from '@common/types/newsInterface'
 import { NewsStateInterface } from '@redux/types'
+import {ERROR_LOADING_NEWS_MESSAGE} from "@common/messages/errors";
 
 export const fetchNewsByIds = createAsyncThunk(
   'news/fetchNewsByIds',
@@ -13,7 +14,8 @@ export const fetchNewsByIds = createAsyncThunk(
         const response = await fetch(getItemFromApiWithUrlById(ids[i]))
 
         if (!response.ok) {
-          console.warn('Server Error!')
+          console.warn(ERROR_LOADING_NEWS_MESSAGE)
+          throw new Error(ERROR_LOADING_NEWS_MESSAGE)
         } else {
           news.push(await response.json())
         }
