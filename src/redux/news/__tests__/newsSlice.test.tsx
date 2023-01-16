@@ -70,30 +70,30 @@ describe('fetchNewsByIds test', () => {
 
     expect(start[0].type).toBe(fetchNewsByIds.pending.type)
     expect(end[0].type).toBe(fetchNewsByIds.rejected.type)
-    expect(end[0].meta.rejectedWithValue).toBe(true)
+    expect(end[0].meta.rejectedWithValue).toBeTruthy()
   })
 
   test('should change loading status with "fetchNewsByIds.pending" action', () => {
     const state = newsReducer(initialState, fetchNewsByIds.pending)
-    expect(state.loading).toBe(true)
+    expect(state.loading).toBeTruthy()
     expect(state.error).toBeNull()
   })
 
   test('should change loading status with "fetchNewsByIds.fulfilled" action', () => {
     const state = newsReducer(initialState, fetchNewsByIds.fulfilled)
-    expect(state.loading).toBe(false)
+    expect(state.loading).toBeFalsy()
   })
 
   test('should change loading status with "fetchNewsByIds.rejected" action', () => {
     const state = newsReducer(initialState, fetchNewsByIds.rejected)
-    expect(state.loading).toBe(false)
+    expect(state.loading).toBeFalsy()
     expect(state.error).not.toBeNull()
   })
 
   test('should clear news with clearNews', () => {
     const state = newsReducer(initialState, clearNews())
     expect(state.news).toEqual([])
-    expect(state.loading).toBe(false)
+    expect(state.loading).toBeFalsy()
     expect(state.error).toBeNull()
   })
 

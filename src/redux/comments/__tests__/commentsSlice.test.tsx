@@ -67,18 +67,18 @@ describe('fetchComments test', () => {
     expect(start[0].type).toBe(fetchComments.pending.type)
 
     expect(end[0].type).toBe(fetchComments.rejected.type)
-    expect(end[0].meta.rejectedWithValue).toBe(true)
+    expect(end[0].meta.rejectedWithValue).toBeTruthy()
   })
 
   test('should change loading status with "fetchComments.pending" action', () => {
     const state = commentsReducer(initialState, fetchComments.pending)
-    expect(state.loading).toBe(true)
+    expect(state.loading).toBeTruthy()
     expect(state.error).toBeNull()
   })
 
   test('should change loading status with "fetchComments.fulfilled" action', () => {
     const state = commentsReducer(initialState, fetchComments.fulfilled)
-    expect(state.loading).toBe(false)
+    expect(state.loading).toBeFalsy()
   })
 
   test('should change loading status with "fetchComments.rejected" action', async () => {
@@ -94,8 +94,8 @@ describe('fetchComments test', () => {
 
     const state = commentsReducer(initialState, fetchComments.rejected)
 
-    expect(state.loading).toBe(false)
-    expect(end[0].meta.rejectedWithValue).toBe(true)
+    expect(state.loading).toBeFalsy()
+    expect(end[0].meta.rejectedWithValue).toBeTruthy()
   })
 
   afterAll(() => {

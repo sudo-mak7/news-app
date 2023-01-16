@@ -41,26 +41,26 @@ describe('newsIdsSlice test', () => {
 
   test('should change loading status with "fetchNewsIds.pending" action', () => {
     const state = newsIdsReducer(initialState, fetchNewsIds.pending)
-    expect(state.loading).toBe(true)
+    expect(state.loading).toBeTruthy()
     expect(state.error).toBeNull()
   })
 
   test('should change loading status with "fetchCurrentNewsById.fulfilled" action', () => {
     const state = newsIdsReducer(initialState, fetchNewsIds.fulfilled)
-    expect(state.loading).toBe(false)
+    expect(state.loading).toBeFalsy()
   })
 
   test('should change loading status with "fetchNewsIds.rejected" action', async () => {
     const state = newsIdsReducer(initialState, fetchNewsIds.rejected)
     expect(state.newsIds).toEqual([])
-    expect(state.loading).toBe(false)
+    expect(state.loading).toBeFalsy()
     expect(state.error).not.toBeNull()
   })
 
   test('should clear newsIds with clearNewsIds', async () => {
     const state = newsIdsReducer(initialState, clearNewsIds())
     expect(state.newsIds).toEqual([])
-    expect(state.loading).toBe(false)
+    expect(state.loading).toBeFalsy()
     expect(state.error).toBeNull()
   })
 

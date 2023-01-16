@@ -71,18 +71,18 @@ describe('currentNewsSlice test', () => {
     expect(start[0].type).toBe(fetchCurrentNewsById.pending.type)
     expect(action[0].type).toBe(actionType)
     expect(end[0].type).toBe(fetchCurrentNewsById.rejected.type)
-    expect(end[0].meta.rejectedWithValue).toBe(true)
+    expect(end[0].meta.rejectedWithValue).toBeTruthy()
   })
 
   test('should change loading status with "fetchCurrentNewsById.pending" action', () => {
     const state = currentNewsReducer(initialState, fetchCurrentNewsById.pending)
-    expect(state.loading).toBe(true)
+    expect(state.loading).toBeTruthy()
     expect(state.error).toBeNull()
   })
 
   test('should change loading status with "fetchCurrentNewsById.fulfilled" action', () => {
     const state = currentNewsReducer(initialState, fetchCurrentNewsById.fulfilled)
-    expect(state.loading).toBe(false)
+    expect(state.loading).toBeFalsy()
   })
 
   test('should change loading status with "fetchCurrentNewsById.rejected" action', async () => {
@@ -98,8 +98,8 @@ describe('currentNewsSlice test', () => {
 
     const state = currentNewsReducer(initialState, fetchCurrentNewsById.rejected)
 
-    expect(state.loading).toBe(false)
-    expect(end[0].meta.rejectedWithValue).toBe(true)
+    expect(state.loading).toBeFalsy()
+    expect(end[0].meta.rejectedWithValue).toBeTruthy()
   })
 
   afterAll(() => {

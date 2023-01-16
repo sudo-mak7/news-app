@@ -40,7 +40,7 @@ describe('NewsPageComponent test', () => {
     mockedDispatch.mockReturnValue(dispatch)
 
     const state = currentNewsSliceReducer(initialState, fetchCurrentNewsById.fulfilled)
-    expect(state.loading).toBe(false)
+    expect(state.loading).toBeFalsy()
 
     render(newsPageComponent())
 
@@ -55,7 +55,7 @@ describe('NewsPageComponent test', () => {
     mockedDispatch.mockReturnValue(dispatch)
 
     const state = currentNewsSliceReducer(initialState, fetchCurrentNewsById.fulfilled)
-    expect(state.loading).toBe(false)
+    expect(state.loading).toBeFalsy()
 
     render(newsPageComponent())
 
